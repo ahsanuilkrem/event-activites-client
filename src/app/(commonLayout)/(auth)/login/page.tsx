@@ -1,12 +1,10 @@
 import LoginForm from "@/src/components/auth/LoginForm";
 
 
+const LoginPage = async ({ searchParams }: { searchParams?: Promise<{ redirect?: string }> }) => {
 
-
-const LoginPage = async ({searchParams}:{searchParams?: Promise<{redirect?: string}>}) => {
-
-   const params = (await searchParams) || {};
-  console.log({searchParams})
+  const params = (await searchParams) || {};
+  // console.log({searchParams})
   return (
     <div className="flex min-h-screen items-center justify-center">
       <div className="w-full max-w-md space-y-6 rounded-lg border p-8 shadow-lg">
@@ -16,7 +14,7 @@ const LoginPage = async ({searchParams}:{searchParams?: Promise<{redirect?: stri
             Enter your credentials to access your account
           </p>
         </div>
-        <LoginForm redirect={params.redirect}  />
+        <LoginForm redirect={params.redirect} />
       </div>
     </div>
   );

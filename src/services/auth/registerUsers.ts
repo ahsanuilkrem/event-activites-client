@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server"
 
-// import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/src/lib/zodValidator";
 import { registerUserValidationZodSchema } from "@/src/zod/auth.validation";
+import { loginUser } from "./loginUser";
+import { serverFetch } from "@/src/lib/server-fetch";
 
 
 export const registerUser = async (_currentState: any, formData: any): Promise<any> => {
@@ -25,9 +26,9 @@ export const registerUser = async (_currentState: any, formData: any): Promise<a
 
         const registerData = {
             password: validatedPayload.password,
+            contactNumber:validatedPayload.contactNumber,
             profile: {
                 name: validatedPayload.name,
-                contactNumber: validatedPayload.contactNumber,
                 email: validatedPayload.email,
             }
         }
@@ -40,17 +41,16 @@ export const registerUser = async (_currentState: any, formData: any): Promise<a
             newFormData.append("file", formData.get("file") as Blob);
         }
 
-        const res = await fetch("http://localhost:5000/api/v1/user/create-user", {
-            method: "POST",
+        const res = await serverFetch.post("/user/create-user", {      
             body: newFormData,
         })
 
         const result = await res.json();
-        console.log(res, "res");
+        // console.log(res, "res");
 
-        // if (result.success) {
-        //     await loginUser(_currentState, formData);
-        // }
+        if (result.success) {
+            await loginUser(_currentState, formData);
+        }
 
         return result;
 

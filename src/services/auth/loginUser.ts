@@ -9,6 +9,7 @@ import { zodValidator } from "@/src/lib/zodValidator";
 import { loginValidationZodSchema } from "@/src/zod/auth.validation";
 import { getDefaultDashboardRoute, isValidRedirectForRole, UserRole } from "@/src/lib/auth-utils";
 import { setCookie } from "./tokenHandlers";
+import { serverFetch } from "@/src/lib/server-fetch";
 
 
 
@@ -29,8 +30,8 @@ export const loginUser = async (_currentState: any, formData: any): Promise<any>
 
         const validatedPayload = zodValidator(payload, loginValidationZodSchema).data;
 
-        const res = await fetch("http://localhost:5000/api/v1/auth/login", {
-            method: "POST",
+        const res = await serverFetch.post("/auth/login", {
+            
             body: JSON.stringify(validatedPayload),
             headers: {
                 "Content-Type": "application/json",

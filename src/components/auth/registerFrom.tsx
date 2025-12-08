@@ -11,7 +11,7 @@ import InputFieldError from "../shared/InputFieldError";
 
 const RegisterForm = () => {
   const [state, formAction, isPending] = useActionState(registerUser, null);
-  console.log(state, "state");
+   console.log(state, "state");
 
    useEffect(() => {
     if (state && !state.success && state.message) {
@@ -32,7 +32,7 @@ const RegisterForm = () => {
           </Field>
           {/* Address */}
           <Field>
-            <FieldLabel htmlFor="contactNumber">Contact Number</FieldLabel>
+            <FieldLabel htmlFor="location">Contact Number</FieldLabel>
             <Input
               id="contactNumber"
               name="contactNumber"

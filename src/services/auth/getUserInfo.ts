@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server"
 
@@ -7,7 +9,7 @@ import { getCookie } from "./tokenHandlers";
 import { UserInfo } from "@/src/types/user.interface";
 import { serverFetch } from "@/src/lib/server-fetch";
 
-export const getUserInfo = async (): Promise<UserInfo | any> => {
+export const getUserInfo = async (accessToken?: string): Promise<UserInfo | any> => {
     let userInfo: UserInfo | any;
     try {
 
@@ -34,10 +36,10 @@ export const getUserInfo = async (): Promise<UserInfo | any> => {
             }
         }
 
-        userInfo = {
-            name: result.data?.admin?.name || result.data?.doctor?.name || result.data?.patient?.name || result.data?.name || "Unknown User",
-            ...result.data
-        };
+        // userInfo = {
+        //     name: result.data?.admin?.name || result.data?.profile?.name || result.data?.name || "Unknown User",
+        //     ...result.data
+        // };
 
 
 

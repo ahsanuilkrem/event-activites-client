@@ -1,5 +1,3 @@
-// import { getNewAccessToken } from "@/services/auth/auth.service";
-// import { getCookie } from "@/services/auth/tokenHandlers";
 
 import { getCookie } from "../services/auth/tokenHandlers";
 
