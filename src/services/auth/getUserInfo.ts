@@ -36,10 +36,10 @@ export const getUserInfo = async (accessToken?: string): Promise<UserInfo | any>
             }
         }
 
-        // userInfo = {
-        //     name: result.data?.admin?.name || result.data?.profile?.name || result.data?.name || "Unknown User",
-        //     ...result.data
-        // };
+        userInfo = {
+            name: result.data?.admin?.name || result.data?.profile?.name || result.data?.name || "Unknown User",
+            ...result.data
+        };
 
 
 
