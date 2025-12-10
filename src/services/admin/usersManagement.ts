@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { serverFetch } from "@/src/lib/server-fetch";
 
-export async function getDoctors(queryString?: string) {
+export async function getUsers(queryString?: string) {
     try {
         const response = await serverFetch.get(`/user${queryString ? `?${queryString}` : ""}`);
         const result = await response.json();
@@ -15,7 +15,7 @@ export async function getDoctors(queryString?: string) {
     }
 }
 
-export async function getDoctorById(id: string) {
+export async function getUserById(id: string) {
     try {
         const response = await serverFetch.get(`/user/${id}`)
         const result = await response.json();

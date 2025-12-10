@@ -75,7 +75,7 @@ const PublicNavbar = async () => {
 
           {/* User Dropdown */}
           <div >
-           {userInfo ? (
+           {!userInfo ? (
             <UserDropdown userInfo={userInfo} />
            ): (
             <Link href="/login">

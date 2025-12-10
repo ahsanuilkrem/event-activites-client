@@ -50,14 +50,14 @@ export const hostNavItems: NavSection[] = [
         items: [
             {
                 title: "Create Event",
-                href: "/doctor/dashboard/create-event",
+                href: "/host/dashboard/create-event",
                 icon: "Calendar", // ✅ String
                 badge: "3",
                 roles: ["HOST"],
             },
             {
                 title: "My Event",
-                href: "/doctor/dashboard/my-schedules",
+                href: "/host/dashboard/my-event",
                 icon: "Clock", // ✅ String
                 roles: ["HOST"],
             },

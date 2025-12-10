@@ -4,7 +4,6 @@
 import { parse } from "cookie";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { redirect } from "next/navigation";
-// import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/src/lib/zodValidator";
 import { loginValidationZodSchema } from "@/src/zod/auth.validation";
 import { getDefaultDashboardRoute, isValidRedirectForRole, UserRole } from "@/src/lib/auth-utils";
