@@ -108,8 +108,9 @@ export async function UpdateEvent( id: string, _prevState: any, formData: FormDa
             newFormData.append("file", formData.get("file") as Blob)
         }
 
-        const response = await serverFetch.post(`/event/${id}`, { 
-            body: newFormData,
+        const response = await serverFetch.patch(`/event/${id}`, { 
+           
+            body: newFormData, 
         })
 
          const result = await response.json();
@@ -125,6 +126,7 @@ export async function UpdateEvent( id: string, _prevState: any, formData: FormDa
 
     }
 }
+
 export async function deleteEvent(id: string) {
     try {
         const response = await serverFetch.delete(`/event/${id}`)

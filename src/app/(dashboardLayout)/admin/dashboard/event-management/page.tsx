@@ -1,42 +1,40 @@
 
-// import DoctorFilters from "@/components/modules/Admin/DoctorsManagement/DoctorFilters";
-// import DoctorsManagementHeader from "@/components/modules/Admin/DoctorsManagement/DoctorsManagementHeader";
-// import DoctorsTable from "@/components/modules/Admin/DoctorsManagement/DoctorsTable";
-// import TablePagination from "@/components/shared/TablePagination";
-// import { TableSkeleton } from "@/components/shared/TableSkeleton";
-// import { queryStringFormatter } from "@/lib/formatters";
-// import { getDoctors } from "@/services/admin/doctorManagement";
-// import { getSpecialities } from "@/services/admin/specialitiesManagement";
-// import { Suspense } from "react";
-
+import EventFilters from "@/src/components/modules/admin/eventManagement/EventFilters";
 import AdminEventManagementHeader from "@/src/components/modules/admin/eventManagement/EventsManagementHeader";
+import EventsTable from "@/src/components/modules/admin/eventManagement/EventsTable";
+import TablePagination from "@/src/components/shared/TablePagination";
+import { TableSkeleton } from "@/src/components/shared/TableSkeleton";
+import { queryStringFormatter } from "@/src/lib/formatters";
+import { getEvent } from "@/src/services/host/hostEvent.service";
+import { Suspense } from "react";
+
 
 const AdminEventsManagementPage = async ({
-//   searchParams,
+  searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
-//   const searchParamsObj = await searchParams;
-//   const queryString = queryStringFormatter(searchParamsObj); // {searchTerm: "John", speciality: "Cardiology" => "?searchTerm=John&speciality=Cardiology"}
-//   const specialitiesResult = await getSpecialities();
-//   const doctorsResult = await getDoctors(queryString);
-//   const totalPages = Math.ceil(
-//     doctorsResult.meta.total / doctorsResult.meta.limit
-//   );
+  const searchParamsObj = await searchParams;
+  const queryString = queryStringFormatter(searchParamsObj);
+  const eventsResult = await getEvent(queryString);
+
+  const totalPages = Math.ceil(
+    eventsResult.meta?.total / eventsResult.meta.limit
+  );
+
   return (
     <div className="space-y-6">
-      <AdminEventManagementHeader/>
-       {/* <DoctorFilters specialties={specialitiesResult?.data || []} />
+      <AdminEventManagementHeader />
+      <EventFilters />
       <Suspense fallback={<TableSkeleton columns={10} rows={10} />}>
-        <DoctorsTable
-          doctors={doctorsResult.data}
-          specialities={specialitiesResult?.data || []}
+        <EventsTable
+          events={eventsResult.data}
         />
         <TablePagination
-          currentPage={doctorsResult.meta.page}
+          currentPage={eventsResult.meta.page}
           totalPages={totalPages}
         />
-      </Suspense> */}
+      </Suspense>
     </div>
   );
 };

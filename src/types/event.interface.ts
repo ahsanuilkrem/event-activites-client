@@ -13,6 +13,8 @@
 //   status           EventStatus @default (OPEN)
 //   averageRating    Float @default (0.0)
 
+import { IHost } from "./user.interface";
+
 //   hostId           String
 //   host             Profile @relation(fields: [hostId], references: [id])
 
@@ -37,6 +39,8 @@ export interface IEvent {
     minParticipants: number;
     maxParticipants: number;
     fee: number;
+    averageRating?: number;
     createdAt?: string;
-    updatedAt?: string
+    updatedAt?: string;
+    host?: IHost;
 }

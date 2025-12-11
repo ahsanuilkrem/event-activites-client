@@ -10,3 +10,16 @@ export interface UserInfo {
     createdAt: string;
     updatedAt: string;
 }
+
+export interface IHost {
+    id: string;
+    name: string;
+    email: string;
+    bio: string;
+    profileImage: string;
+    location: string;
+    interests: string;
+    isDeleted: boolean;
+    createdAt: string;
+    updatedAt: string;
+}

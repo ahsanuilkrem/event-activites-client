@@ -36,9 +36,6 @@ const PublicNavbar = async () => {
   const navItems = publicNav[role];
 
   const userInfo = (await getUserInfo()) as UserInfo;
-  //    if (!userInfo) {
-  //   return <div className="hidden">No user session found</div>; 
-  // }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur  dark:bg-background/95">
@@ -75,7 +72,7 @@ const PublicNavbar = async () => {
 
           {/* User Dropdown */}
           <div >
-           {!userInfo ? (
+           {accessToken  ? (
             <UserDropdown userInfo={userInfo} />
            ): (
             <Link href="/login">
