@@ -7,6 +7,7 @@ import { loginUser } from "@/src/services/auth/loginUser";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import InputFieldError from "../shared/InputFieldError";
+import Link from "next/link";
 
 
 
@@ -61,17 +62,17 @@ const LoginForm = ({ redirect }: { redirect?: string }) => {
 
             <FieldDescription className="px-6 text-center">
               Don&apos;t have an account?{" "}
-              <a href="/register" className="text-blue-600 hover:underline">
+              <Link href="/register" className="text-blue-600 hover:underline">
                 Sign up
-              </a>
+              </Link>
             </FieldDescription>
             <FieldDescription className="px-6 text-center">
-              <a
+              <Link
                 href="/forget-password"
                 className="text-blue-600 hover:underline"
               >
                 Forgot password?
-              </a>
+              </Link>
             </FieldDescription>
           </Field>
         </FieldGroup>

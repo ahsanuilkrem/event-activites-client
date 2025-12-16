@@ -7,7 +7,7 @@ export const publicNav = {
 
   USER: [
 
-    { href: "/consultation", label: "Explore Events" },
+    // { href: "/consultation", label: "Explore Events" },
     { href: "/dashboard/join-event", label: "My Events" },
     { href: "/dashboard", label: "Dashboard" },
   ],
@@ -15,8 +15,8 @@ export const publicNav = {
   HOST: [
 
     { href: "/consultation", label: "Explore Events" },
-    { href: "/host/dashboard/my-event", label: "My Events" },
-    { href: "/host/dashboard/create-event", label: "Create Event" },
+    // { href: "/host/dashboard/my-event", label: "My Events" },
+    // { href: "/host/dashboard/create-event", label: "Create Event" },
     { href: "/host/dashboard", label: "Dashboard" },
   ],
 
@@ -27,7 +27,7 @@ export const publicNav = {
     // { href: "/admin/dashboard/event-management", label: "Manage Events" },
     // { href: "/admin/dashboard/admins-management", label: "Admins" },
     { href: "/consultation", label: "Explore Events" },
-    { href: "/become-host", label: "Become a Host" },
+    // { href: "/become-host", label: "Become a Host" },
     { href: "/admin/dashboard", label: "Dashboard" },
   ],
 };

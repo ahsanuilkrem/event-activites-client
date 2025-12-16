@@ -48,28 +48,28 @@ export const hostNavItems: NavSection[] = [
     {
         title: "Event",
         items: [
-            {
-                title: "Create Event",
-                href: "/host/dashboard/create-event",
-                icon: "Calendar", // ✅ String
-                badge: "3",
-                roles: ["HOST"],
-            },
+            // {
+            //     title: "Create Event",
+            //     href: "/host/dashboard/create-event",
+            //     icon: "Calendar", // ✅ String
+            //     badge: "3",
+            //     roles: ["HOST"],
+            // },
             {
                 title: "My Event",
                 href: "/host/dashboard/my-event",
                 icon: "Clock", // ✅ String
                 roles: ["HOST"],
             },
-            {
-                title: "Explore Events",
-                href: "/consultation",
-                icon: "ClipboardList", // ✅ String
-                roles: ["USER"],
-            },
+            // {
+            //     title: "Explore Events",
+            //     href: "/consultation",
+            //     icon: "ClipboardList", // ✅ String
+            //     roles: ["USER"],
+            // },
             {
                 title: "join event",
-                href: "/doctor/dashboard/prescriptions",
+                href: "/host/dashboard/join-event",
                 icon: "FileText", // ✅ String
                 roles: ["HOST"],
             },
@@ -87,12 +87,12 @@ export const userNavItems: NavSection[] = [
                 icon: "Calendar", // ✅ String
                 roles: ["USER"],
             },
-            {
-                title: "Explore Events",
-                href: "/consultation",
-                icon: "ClipboardList", // ✅ String
-                roles: ["USER"],
-            },
+            // {
+            //     title: "Explore Events",
+            //     href: "/consultation",
+            //     icon: "ClipboardList", // ✅ String
+            //     roles: ["USER"],
+            // },
         ],
     },
 
@@ -117,7 +117,7 @@ export const adminNavItems: NavSection[] = [
             },
             {
                 title: "Manage Users",
-                href: "/admin/dashboard/user-management",
+                href: "/admin/dashboard/users-management",
                 icon: "Users", // ✅ String
                 roles: ["ADMIN"],
             },

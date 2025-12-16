@@ -1,16 +1,15 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server"
 
-// import { serverFetch } from "@/lib/server-fetch";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { getCookie } from "./tokenHandlers";
-import { UserInfo } from "@/src/types/user.interface";
 import { serverFetch } from "@/src/lib/server-fetch";
+import { IUser } from "@/src/types/user.interface";
 
-export const getUserInfo = async (accessToken?: string): Promise<UserInfo | any> => {
-    let userInfo: UserInfo | any;
+export const getUserInfo = async (): Promise<IUser | any> => {
+    let userInfo: IUser | any;
     try {
 
         const response = await serverFetch.get("/auth/me", {
@@ -30,7 +29,7 @@ export const getUserInfo = async (accessToken?: string): Promise<UserInfo | any>
             const verifiedToken = jwt.verify(accessToken, process.env.JWT_SECRET as string) as JwtPayload;
 
             userInfo = {
-                name: verifiedToken.name || "Unknown User",
+                name: verifiedToken.name || "Unknown User" ,
                 email: verifiedToken.email,
                 role: verifiedToken.role,
             }
@@ -48,7 +47,7 @@ export const getUserInfo = async (accessToken?: string): Promise<UserInfo | any>
         console.log(error);
         return {
             id: "",
-            name: "Unknown User",
+            name: "",
             email: "",
             role: "USER",
         };

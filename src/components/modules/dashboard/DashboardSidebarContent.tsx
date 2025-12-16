@@ -2,16 +2,16 @@
 
 import { getIconComponent } from "@/src/lib/icon-mapper";
 import { NavSection } from "@/src/types/dashboard.interface";
-import { UserInfo } from "@/src/types/user.interface";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Badge } from "../../ui/badge";
 import { Separator } from "../../ui/separator";
 import { cn } from "@/src/lib/utils";
+import { IUser } from "@/src/types/user.interface";
 
 interface DashboardSidebarContentProps {
-  userInfo: UserInfo;
+  userInfo: IUser;
   navItems: NavSection[];
   dashboardHome: string;
 }
@@ -84,11 +84,11 @@ const DashboardSidebarContent = ({
         <div className="flex items-center gap-3">
           <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
             <span className="text-sm font-semibold text-primary">
-              {userInfo.name.charAt(0).toUpperCase()}
+              {userInfo?.name.charAt(0).toUpperCase()}
             </span>
           </div>
           <div className="flex-1 overflow-hidden">
-            <p className="text-sm font-medium truncate">{userInfo.name}</p>
+            <p className="text-sm font-medium truncate">{userInfo?.name}</p>
             <p className="text-xs text-muted-foreground capitalize">
               {userInfo?.role?.toLowerCase()}
             </p>

@@ -21,9 +21,21 @@ export async function updateMyProfile(formData: FormData) {
 
         // Get all form fields except the file
         const data: any = {};
+        // formData.forEach((value, key) => {
+        //     if (key !== 'file' && value) {
+        //         data[key] = value;
+        //     }
+        // });
+
         formData.forEach((value, key) => {
-            if (key !== 'file' && value) {
-                data[key] = value;
+            if (key !== "file" && value) {
+                if (key === "interests") {
+                    data[key] = String(value)
+                        .split(",")
+                        .map(i => i.trim());
+                } else {
+                    data[key] = value;
+                }
             }
         });
 
@@ -36,7 +48,10 @@ export async function updateMyProfile(formData: FormData) {
             uploadFormData.append('file', file);
         }
 
-        const response = await serverFetch.patch(`/user/update-my-profile`, {
+        // const response = await serverFetch.patch(`/user/update-my-profile`, {
+        //     body: uploadFormData,
+        // });
+          const response = await serverFetch.patch(`/profile/update`, {
             body: uploadFormData,
         });
 

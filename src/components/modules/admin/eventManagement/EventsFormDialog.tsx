@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-"use client";
+
 
 // import InputFieldError from "@/src/components/shared/InputFieldError";
 // import { Button } from "@/src/components/ui/button";
@@ -130,8 +129,6 @@
 // export default EventsFormDialog;
 
 
-
-
 import InputFieldError from "@/src/components/shared/InputFieldError";
 import { Button } from "@/src/components/ui/button";
 import {
@@ -182,6 +179,7 @@ console.log(state)
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    console.log(file)
     setSelectedFile(file || null);
   };
 
@@ -398,7 +396,7 @@ console.log(state)
               )}
               <Input
                 ref={fileInputRef}
-                id="image" name="image"
+                id="file" name="file"
                 type="file" accept="image/*"
                 onChange={handleFileChange}
               />
@@ -435,6 +433,6 @@ console.log(state)
 
 export default EventsFormDialog;
 
-function setSelectedFile(arg0: File | null) {
-  throw new Error("Function not implemented.");
-}
+// function setSelectedFile(arg0: File | null) {
+//   throw new Error("Function not implemented.");
+// }

@@ -4,16 +4,23 @@ import { HowItWorks } from "@/src/components/modules/Home/HowItWorks";
 import { PopularCategories } from "@/src/components/modules/Home/PopularCategories";
 import { Testimonials } from "@/src/components/modules/Home/Testimonials";
 import { TopRatedHosts } from "@/src/components/modules/Home/TopRatedHosts";
+import { getEvent } from '@/src/services/host/hostEvent.service';
 
 
 
+  const [EventsResponse] = await Promise.all([
+    getEvent(),
+
+  ]);
+
+  const events = EventsResponse?.data || [];
 
 export default function Home() {
   return (
     <>
     <main>
       <Hero />
-      <FeaturedEvents />
+      <FeaturedEvents events={events} />
       <HowItWorks />
       <PopularCategories />
       <TopRatedHosts />

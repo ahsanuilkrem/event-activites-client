@@ -1,4 +1,8 @@
+"use server"
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+
 import { serverFetch } from "@/src/lib/server-fetch";
 import { zodValidator } from "@/src/lib/zodValidator";
 import { IEvent } from "@/src/types/event.interface";
@@ -51,11 +55,29 @@ export async function createEvent(_prevState: any, formData: FormData) {
 
 export async function getEvent(queryString?: string) {
     try {
-        const response = await serverFetch.get(`/event${queryString ? `?${queryString}` :""}`, {
+        const response = await fetch(`http://localhost:5000/api/v1/event${queryString ? `?${queryString}` :""}`, {
+            method:"GET",
+            next: {tags: ["event-list"]}
+        })
+        const result = await response.json();
+        // console.log("get all event",result)
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+}
+
+export async function getMyEvent(queryString?: string) {
+    try {
+        const response = await serverFetch.get(`/event/my-event${queryString ? `?${queryString}` :""}`, {
             // next: {tags: ["event-list"]}
         })
         const result = await response.json();
-        console.log("get all event",result)
+        console.log("get all My event",result)
         return result;
     } catch (error: any) {
         console.log(error);
@@ -140,3 +162,4 @@ export async function deleteEvent(id: string) {
         };
     }
 }
+

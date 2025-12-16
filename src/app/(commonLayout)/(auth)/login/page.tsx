@@ -1,5 +1,6 @@
-import LoginForm from "@/src/components/auth/LoginForm";
 
+import LoginForm from "@/src/components/auth/LoginForm";
+ 
 
 const LoginPage = async ({ searchParams }: { searchParams?: Promise<{ redirect?: string }> }) => {
 

@@ -8,20 +8,18 @@ import LogoutButton from "./LogoutButton";
 import { getUserInfo } from "@/src/services/auth/getUserInfo";
 import { publicNav } from "@/src/lib/publicNav";
 import UserDropdown from "../modules/dashboard/UserDropdown";
-import { UserInfo } from "@/src/types/user.interface";
+import { IUser } from "@/src/types/user.interface";
 
 
 
 
 const PublicNavbar = async () => {
-  // const user = getUserInfo.
+  
   // const navItems = [
-  //   { href: "#", label: "" },
-  //   { href: "#", label: "Explore Events" },
-  //   { href: "#", label: "Become a Host" },
-  //   { href: "#", label: "My Events" },
-  //   { href: "/dashboard", label: "Dashboard" },
-
+  //   { href: "/consultation", label: "Explore Events", role: "PUBLIC" },
+  //   { href: "#", label: "Become a Host", role: "PUBLIC"  },
+  //   // { href: "#", label: "My Events" },
+  //   { href: "/dashboard", label: "Dashboard", role: UserRoles.USER },
   // ];
 
   const accessToken = await getCookie("accessToken");
@@ -29,13 +27,13 @@ const PublicNavbar = async () => {
   let role: "GUEST" | "USER" | "HOST" | "ADMIN" = "GUEST";
 
   if (accessToken) {
-    const user = await getUserInfo(accessToken);
+    const user = await getUserInfo();
     role = user?.role ?? "GUEST";
   }
 
   const navItems = publicNav[role];
 
-  const userInfo = (await getUserInfo()) as UserInfo;
+  const userInfo = (await getUserInfo()) as IUser;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur  dark:bg-background/95">
@@ -72,7 +70,7 @@ const PublicNavbar = async () => {
 
           {/* User Dropdown */}
           <div >
-           {accessToken  ? (
+           {accessToken ? (
             <UserDropdown userInfo={userInfo} />
            ): (
             <Link href="/login">

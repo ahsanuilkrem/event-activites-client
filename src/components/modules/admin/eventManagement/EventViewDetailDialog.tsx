@@ -37,15 +37,15 @@ const EventViewDetailDialog = ({
 
         <div className="flex-1 overflow-y-auto px-6 pb-6">
 
-          <Card className="w-full  mx-auto ">
+          <Card className="w-full  mx-auto pt-0 ">
             {/* Image */}
             {event.image && (
-              <div className="relative w-full h-64">
+              <div className="relative w-full h-70">
                 <Image
                   src={event.image}
                   alt={event.EventName}
                   fill
-                  className="rounded-t-lg object-cover"
+                  className="rounded-t-lg  object-cover"
                 />
               </div>
             )}
@@ -109,8 +109,9 @@ const EventViewDetailDialog = ({
               </div>
 
               {/* Fee */}
-              <div className="flex items-center gap-2 text-sm">
+              <div className="flex items-center gap-1 text-sm">
                 <DollarSign className="w-4 h-4" />
+                
                 <span>{event.fee === 0 ? "Free" : `${event.fee} BDT`}</span>
               </div>
 
@@ -120,7 +121,7 @@ const EventViewDetailDialog = ({
                 <div className="flex items-center gap-2 text-sm">
                   <span>Rating: </span>
                   <Star className="w-4 h-4 text-yellow-500" />
-                  <span>{event.averageRating.toFixed(1)}/5</span>
+                  <span>{event.averageRating.toFixed(1)}5</span>
                 </div>
               )}
 
