@@ -61,12 +61,12 @@ export const hostNavItems: NavSection[] = [
                 icon: "Clock", // ✅ String
                 roles: ["HOST"],
             },
-            // {
-            //     title: "Explore Events",
-            //     href: "/consultation",
-            //     icon: "ClipboardList", // ✅ String
-            //     roles: ["USER"],
-            // },
+            {
+                title: "Explore Events",
+                href: "/consultation",
+                icon: "ClipboardList", // ✅ String
+                roles: ["USER", "HOST", "ADMIN"],
+            },
             {
                 title: "join event",
                 href: "/host/dashboard/join-event",
@@ -87,12 +87,12 @@ export const userNavItems: NavSection[] = [
                 icon: "Calendar", // ✅ String
                 roles: ["USER"],
             },
-            // {
-            //     title: "Explore Events",
-            //     href: "/consultation",
-            //     icon: "ClipboardList", // ✅ String
-            //     roles: ["USER"],
-            // },
+            {
+                title: "Explore Events",
+                href: "/consultation",
+                icon: "ClipboardList", // ✅ String
+                roles: ["USER", "HOST", "ADMIN"],
+            },
         ],
     },
 

@@ -1,7 +1,6 @@
 
-
-import { IHost } from "./user.interface";
-
+import { IReview } from "./review.interface";
+import { IHost, IUser } from "./user.interface";
 
 export interface IEvent {
     id?: string;
@@ -19,6 +18,31 @@ export interface IEvent {
     createdAt?: string;
     updatedAt?: string;
     host?: IHost;
+}
+
+export enum PaymentStatus {
+  PENDING = "PENDING",
+  SUCCESS = "SUCCESS",
+  FAILED = "FAILED",
+}
+
+export interface IJoinEvent {
+    id?: string;
+    userId: string;
+    eventId: string;
+    status: PaymentStatus;
+    user: IUser;
+    event: IEvent;
+    createdAt: string;
+    updatedAt: string;
+    review?: IReview;          
+    //   payment      
+
+}
+
+export interface IJoinEventFormData {
+    eventId: string;
+   
 }
 
 // [

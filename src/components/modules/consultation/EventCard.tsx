@@ -103,12 +103,25 @@ import { Card, CardContent, CardFooter } from "../../ui/card";
 import { Button } from "../../ui/button";
 import Image from "next/image";
 import { DateCell } from "../../shared/cell/DateCell";
+import { useRouter } from "next/navigation";
 
 interface EventCardProps {
   event: IEvent;
 }
 
 export default function EventCard({ event }: EventCardProps) {
+
+  const router = useRouter();
+
+    const handleContinue = () => {
+      if (event) {
+       router.push(
+          `/dashboard/join-event/${event.id}`
+        );
+      }
+    };
+
+
   return (
    <>
     <Card className="overflow-hidden hover:shadow-xl transition-shadow rounded-xl mt-0 pt-0">
@@ -171,10 +184,10 @@ export default function EventCard({ event }: EventCardProps) {
             View Details
           </Button>
         </Link>
-
-        <Button className="flex-1">
+        <Button className="flex-1"  onClick={handleContinue}>
          join event
         </Button>
+
       </CardFooter>
     </Card>
    </>

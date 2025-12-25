@@ -7,7 +7,7 @@ export const publicNav = {
 
   USER: [
 
-    // { href: "/consultation", label: "Explore Events" },
+    { href: "/consultation", label: "Explore Events" },
     { href: "/dashboard/join-event", label: "My Events" },
     { href: "/dashboard", label: "Dashboard" },
   ],
