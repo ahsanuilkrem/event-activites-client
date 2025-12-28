@@ -46,7 +46,7 @@ const JoinEventConfirmation = ({
                     router.push("/dashboard/my-event");
                 }, 2000);
             } else {
-                toast.error(result.message || "Failed to book Event");
+                toast.error(result.message || "Failed to join Event");
                 setIsBooking(false);
             }
         } catch (error) {
@@ -70,11 +70,11 @@ const JoinEventConfirmation = ({
                                     Event Confirmed!
                                 </h2>
                                 <p className="text-green-700 mt-2">
-                                    Your Event has been successfully booked
+                                    Your Event has been successfully join Event
                                 </p>
                             </div>
                             <p className="text-sm text-green-600">
-                                Redirecting to your Events...
+                                Redirecting to your My Events...
                             </p>
                         </div>
                     </CardContent>

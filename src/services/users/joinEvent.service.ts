@@ -31,7 +31,7 @@ export async function createJoinEvent(data: IJoinEventFormData) {
 export async function getMyJoinEvents(id: string) {
     try {
         const response = await serverFetch.get(
-            `event//my-event/${id}}`
+            `/event/my-event/${id}`
         );
         const result = await response.json();
         console.log({ result });
@@ -45,7 +45,28 @@ export async function getMyJoinEvents(id: string) {
                     ? error.message
                     : "Failed to change appointment status",
         };
-    } 
+    }
+}
+
+export async function geteventById(id: string) {
+    try {
+        const response = await serverFetch.get(`/event/eventId/${id}`);
+        const result = await response.json();
+        return {
+            success: true,
+            data: result.data,
+        };
+    } catch (error: any) {
+        console.error("Error fetching My Even:", error);
+        return {
+            success: false,
+            data: null,
+            message:
+                process.env.NODE_ENV === "development"
+                    ? error.message
+                    : "Failed to fetch my event",
+        };
+    }
 }
 
 
@@ -66,5 +87,5 @@ export async function getMyJoinEvents(id: string) {
 //                     ? error.message
 //                     : "Failed to change appointment status",
 //         };
-//     } 
+//     }
 // }

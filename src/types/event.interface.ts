@@ -27,7 +27,7 @@ export enum PaymentStatus {
 }
 
 export interface IJoinEvent {
-    id?: string;
+    id: string;
     userId: string;
     eventId: string;
     status: PaymentStatus;

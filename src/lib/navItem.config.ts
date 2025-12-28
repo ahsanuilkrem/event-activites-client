@@ -83,7 +83,7 @@ export const userNavItems: NavSection[] = [
         items: [
             {
                 title: "Join Event",
-                href: "/dashboard/join-event",
+                href: "/dashboard/my-event",
                 icon: "Calendar", // ✅ String
                 roles: ["USER"],
             },
