@@ -2,11 +2,11 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-
 import { serverFetch } from "@/src/lib/server-fetch";
 import { zodValidator } from "@/src/lib/zodValidator";
 import { IEvent } from "@/src/types/event.interface";
 import { createEventZodSchema, UpdateEventZodSchema } from "@/src/zod/event.validation";
+import { revalidateTag } from "next/cache";
 
 
 export async function createEvent(_prevState: any, formData: FormData) {
@@ -77,7 +77,7 @@ export async function getMyEvent(queryString?: string) {
             // next: {tags: ["event-list"]}
         })
         const result = await response.json();
-        console.log("get all My event",result)
+        // console.log("get all My event",result)
         return result;
     } catch (error: any) {
         console.log(error);
@@ -92,7 +92,7 @@ export async function getEventById(id: string) {
     try {
         const response = await serverFetch.get(`/event/${id}`)
         const result = await response.json();
-        console.log("getEventById", result)
+        // console.log("getEventById", result)
         return result;
     } catch (error: any) {
         console.log(error);
@@ -114,9 +114,9 @@ export async function UpdateEvent( id: string, _prevState: any, formData: FormDa
             status: formData.get("status") as  "OPEN"| "FULL"| "CANCELLED" | "COMPLETED",
             minParticipants: Number(formData.get("minParticipants")),
             maxParticipants: Number(formData.get("maxParticipants")),
-            fee: Number(formData.get("fee")),
-           
+            fee: Number(formData.get("fee")),    
         }
+       
         if (zodValidator(payload, UpdateEventZodSchema).success === false) {
             return zodValidator(payload, UpdateEventZodSchema);
         }
@@ -136,10 +136,10 @@ export async function UpdateEvent( id: string, _prevState: any, formData: FormDa
         })
 
          const result = await response.json();
-        // if(result.success){
-        //     revalidateTag("event-list", "max");
-        // }
-        console.log("UpdateEvent",result)
+        if(result.success){
+            revalidateTag("event-list", "max");
+        }
+        // console.log("UpdateEvent",result)
         return result;
         
     } catch (error: any) {

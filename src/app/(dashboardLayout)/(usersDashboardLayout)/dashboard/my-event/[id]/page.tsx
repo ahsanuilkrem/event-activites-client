@@ -10,15 +10,13 @@ interface EventDetailPageProps {
   }>;
 }
 
-
-
 export default async function JoinEventDetailPage({
   params,
 }: EventDetailPageProps) {
   const { id } = await params;
 
   const response = await geteventById(id);
-  console.log({ response });
+  // console.log({ response });
 
   if (!response?.success || !response?.data) {
     notFound();

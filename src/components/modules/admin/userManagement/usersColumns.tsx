@@ -1,29 +1,21 @@
 "use client";
 
+import { UserInfoCell } from "@/src/components/shared/cell/UserInfoCell";
 import { Column } from "@/src/components/shared/ManagementTable";
 import { IUser } from "@/src/types/user.interface";
 
 
 export const usersColumns: Column<IUser>[] = [
-//   {
-//     header: "Patient",
-//     accessor: (patient) => (
-//       <UserInfoCell
-//         name={patient.name}
-//         email={patient.email}
-//         photo={patient.profilePhoto}
-//       />
-//     ),
-//     sortKey: "name",
-//   },
-
   {
-    header: "name",
+    header: "user",
     accessor: (user) => (
-      <div className="flex flex-col">
-        <span className="text-sm">{user.name}</span>
-      </div>
+      <UserInfoCell
+        name={user.name}
+        email={user.email}
+        photo={user.profile?.profileImage}
+      />
     ),
+    sortKey: "name",
   },
   {
     header: "email",

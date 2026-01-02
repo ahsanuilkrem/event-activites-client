@@ -21,6 +21,7 @@ export interface IHost {
     location: string;
     interests: string[];
     isDeleted: boolean;
+    user: IUser;
     createdAt: string;
     updatedAt: string;
 }

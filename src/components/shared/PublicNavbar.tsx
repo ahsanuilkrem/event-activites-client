@@ -11,8 +11,6 @@ import UserDropdown from "../modules/dashboard/UserDropdown";
 import { IUser } from "@/src/types/user.interface";
 
 
-
-
 const PublicNavbar = async () => {
   
   // const navItems = [

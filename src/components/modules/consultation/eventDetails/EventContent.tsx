@@ -1,4 +1,4 @@
-
+"use client"
 import { Card, CardContent, CardHeader, CardTitle } from "../../../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../../../ui/avatar";
 import { IEvent } from "@/src/types/event.interface";
@@ -7,18 +7,29 @@ import Image from "next/image";
 import { Badge } from "../../../ui/badge";
 import { DateCell } from "../../../shared/cell/DateCell";
 import { Button } from "@/src/components/ui/button";
+import { useRouter } from "next/navigation";
 
 interface EventContentProps {
     event: IEvent;
 }
 
 const EventContent = ({ event }: EventContentProps) => {
+    const router = useRouter();
     const initials = event.host?.name
         .split(" ")
         .map((n) => n[0])
         .join("")
         .toUpperCase()
         .slice(0, 2);
+
+    
+    const handleContinue = () => {
+        if (event) {
+            router.push(
+                `/dashboard/join-event/${event.id}`
+            );
+        }
+    };
 
     return (
         <div className="space-y-6">
@@ -58,146 +69,116 @@ const EventContent = ({ event }: EventContentProps) => {
                     </div>
                 </CardContent>
             </Card>
-{/* 
-            <div className="grid gap-6 md:grid-cols-2">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Contact Information</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                        <div className="flex items-center gap-3">
-                            <Mail className="h-5 w-5 text-muted-foreground" />
-                            <span>{event.host?.email}</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <Phone className="h-5 w-5 text-muted-foreground" />
-                            <span>{event.host?.interests}</span>
-                        </div>
-                        {event.host?.location && (
-                            <div className="flex items-start gap-3">
-                                <MapPin className="h-5 w-5 text-muted-foreground mt-1" />
-                                <span>{event.host?.location}</span>
-                            </div>
-                        )}
-                    </CardContent>
-                </Card>
-            </div> */}
 
             {/* Event Details */}
             {/* <div className="flex-1 overflow-y-auto px-6 pb-6"> */}
 
-                <Card className="w-full  mx-auto pt-0 ">
-                    {/* Image */}
-                    {event.image && (
-                        <div className="relative w-full h-70">
-                            <Image
-                                src={event.image}
-                                alt={event.EventName}
-                                fill
-                                className="rounded-t-lg  object-cover"
-                            />
+            <Card className="w-full  mx-auto pt-0 ">
+                {/* Image */}
+                {event.image && (
+                    <div className="relative w-full h-70">
+                        <Image
+                            src={event.image}
+                            alt={event.EventName}
+                            fill
+                            className="rounded-t-lg  object-cover"
+                        />
+                    </div>
+                )}
+
+                <CardHeader>
+                    <div className="flex justify-between items-center">
+                        <CardTitle className="text-2xl font-bold">
+                            {event.EventName}
+                        </CardTitle>
+
+                        {/* Status */}
+                        {event.status && (
+                            <Badge
+                                variant={
+                                    event.status === "OPEN"
+                                        ? "default"
+                                        : event.status === "FULL"
+                                            ? "destructive"
+                                            : "outline"
+                                }
+                            >
+                                {event.status}
+                            </Badge>
+                        )}
+                    </div>
+
+                    {/* Category */}
+
+                    <div className="flex items-start gap-3">
+                        <span>Category :</span>
+                        <Badge
+                            variant={event?.category ? "destructive" : "default"}
+                            className="text-sm"
+                        >
+                            {event.category}
+                        </Badge>
+                    </div>
+
+                </CardHeader>
+
+                <CardContent className="space-y-4">
+
+                    {/* Date */}
+                    <div className="flex items-center gap-2 text-sm">
+                        <Calendar className="w-4 h-4" />
+                        <DateCell date={event.date} />
+                    </div>
+
+                    {/* Location */}
+                    <div className="flex items-center gap-2 text-sm">
+                        <MapPin className="w-4 h-4" />
+                        <span>{event.location}</span>
+                    </div>
+
+                    {/* Participants */}
+                    <div className="flex items-center gap-2 text-sm">
+                        <Users className="w-4 h-4" />
+                        <span>
+                            {event.minParticipants} – {event.maxParticipants} participants
+                        </span>
+                    </div>
+
+                    {/* Fee */}
+                    <div className="flex items-center gap-1 text-sm">
+                        <DollarSign className="w-4 h-4" />
+
+                        <span>{event.fee === 0 ? "Free" : `${event.fee} BDT`}</span>
+                    </div>
+
+                    {/* Rating */}
+
+                    {event.averageRating !== undefined && (
+                        <div className="flex items-center gap-2 text-sm">
+                            <span>Rating: </span>
+                            <Star className="w-4 h-4 text-yellow-500" />
+                            <span>{event.averageRating.toFixed(1)}5</span>
                         </div>
                     )}
 
-                    <CardHeader>
-                        <div className="flex justify-between items-center">
-                            <CardTitle className="text-2xl font-bold">
-                                {event.EventName}
-                            </CardTitle>
-
-                            {/* Status */}
-                            {event.status && (
-                                <Badge
-                                    variant={
-                                        event.status === "OPEN"
-                                            ? "default"
-                                            : event.status === "FULL"
-                                                ? "destructive"
-                                                : "outline"
-                                    }
-                                >
-                                    {event.status}
-                                </Badge>
-                            )}
-                        </div>
-
-                        {/* Category */}
-
-                        <div className="flex items-start gap-3">
-                            <span>Category :</span>
-                            <Badge
-                                variant={event?.category ? "destructive" : "default"}
-                                className="text-sm"
-                            >
-                                {event.category}
-                            </Badge>
-                        </div>
-
-                    </CardHeader>
-
-                    <CardContent className="space-y-4">
-
-                        {/* Date */}
-                        <div className="flex items-center gap-2 text-sm">
-                            <Calendar className="w-4 h-4" />
-                            <DateCell date={event.date} />
-                        </div>
-
-                        {/* Location */}
-                        <div className="flex items-center gap-2 text-sm">
-                            <MapPin className="w-4 h-4" />
-                            <span>{event.location}</span>
-                        </div>
-
-                        {/* Participants */}
-                        <div className="flex items-center gap-2 text-sm">
-                            <Users className="w-4 h-4" />
-                            <span>
-                                {event.minParticipants} – {event.maxParticipants} participants
-                            </span>
-                        </div>
-
-                        {/* Fee */}
-                        <div className="flex items-center gap-1 text-sm">
-                            <DollarSign className="w-4 h-4" />
-
-                            <span>{event.fee === 0 ? "Free" : `${event.fee} BDT`}</span>
-                        </div>
-
-                        {/* Rating */}
-
-                        {event.averageRating !== undefined && (
-                            <div className="flex items-center gap-2 text-sm">
-                                <span>Rating: </span>
-                                <Star className="w-4 h-4 text-yellow-500" />
-                                <span>{event.averageRating.toFixed(1)}5</span>
-                            </div>
+                    {/* Description */}
+                    <div>
+                        <span>Description:  </span>
+                        {event.description && (
+                            <p className="text-sm text-muted-foreground">
+                                {event.description}
+                            </p>
                         )}
+                    </div>
+                    <div className="">
+                        <Button className="flex-1" onClick={handleContinue}>
+                            join event
+                        </Button>
 
-                        {/* Description */}
-                        <div>
-                            <span>Description:  </span>
-                            {event.description && (
-                                <p className="text-sm text-muted-foreground">
-                                    {event.description}
-                                </p>
-                            )}
-                        </div>
+                    </div>
 
-                        {/* {!isModal && (
-                <div className="flex gap-4">
-                  <Button>Join Event</Button>
-                  
-                </div>
-              )} */}
-
-              <div className="">
-                  <Button>Join Event</Button>
-                  
-                </div>
-
-                    </CardContent>
-                </Card>
+                </CardContent>
+            </Card>
             {/* </div> */}
 
         </div>

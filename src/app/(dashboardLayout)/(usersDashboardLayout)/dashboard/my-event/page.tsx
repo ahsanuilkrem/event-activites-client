@@ -4,7 +4,6 @@ import { getMyJoinEvents } from "@/src/services/users/joinEvent.service";
 import { IJoinEvent } from "@/src/types/event.interface";
 
 export default async function MyEventPage() {
-
     const user = await getUserInfo();
     // console.log(user)
     const userId: string = user?.profile?.id
@@ -15,7 +14,6 @@ export default async function MyEventPage() {
     ]);
     const events: IJoinEvent[] = response?.data.data || [];
     //   console.log(events)
-
     return (
         <div className="space-y-6">
             <div>

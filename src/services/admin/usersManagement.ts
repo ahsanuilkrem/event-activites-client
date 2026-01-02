@@ -1,5 +1,7 @@
+"use server";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { serverFetch } from "@/src/lib/server-fetch";
+
 
 export async function getUsers(queryString?: string) {
     try {
@@ -29,32 +31,38 @@ export async function getUserById(id: string) {
     }
 }
 
-export async function changeUserStatus(userId: string, status: string) {
+export async function changeUserStatus(
+  id: string,
+  _prevState: any,
+  formData: FormData
+) {
+  const payload = {
+    name: formData.get("name"),
+    contactNumber: formData.get("contactNumber"),
+    role: formData.get("role"),
+    status: formData.get("status"),
+  };
 
-    try {
-        const response = await serverFetch.patch(
-            `/user/status/${userId}`,
-            {
-                body: JSON.stringify({ status }),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
-        );
+  // remove null values
+  Object.keys(payload).forEach(
+    (key) =>
+      payload[key as keyof typeof payload] == null &&
+      delete payload[key as keyof typeof payload]
+  );
 
-        const result = await response.json();
-        return result;
-    } catch (error: any) {
-        console.error("Error changing appointment status:", error);
-        return {
-            success: false,
-            message:
-                process.env.NODE_ENV === "development"
-                    ? error.message
-                    : "Failed to change appointment status",
-        };
+  const response = await serverFetch.patch(
+    `/user/status/${id}`,
+    {
+      body: JSON.stringify(payload),   // ✅ JSON
+      headers: {
+        "Content-Type": "application/json",
+      },
     }
+  );
+
+  return response.json();
 }
+
 
 export async function deleteUser(id: string) {
     try {

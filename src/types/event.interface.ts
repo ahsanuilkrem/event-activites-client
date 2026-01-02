@@ -36,9 +36,23 @@ export interface IJoinEvent {
     createdAt: string;
     updatedAt: string;
     review?: IReview;          
-    //   payment      
+    // payment      
 
 }
+
+// export interface IPayment {
+//     id: string;
+//     userId: string;
+//     eventId: string;
+//     status: PaymentStatus;
+//     user: IUser;
+//     event: IEvent;
+//     createdAt: string;
+//     updatedAt: string;
+//     review?: IReview;          
+    
+
+// }
 
 export interface IJoinEventFormData {
     eventId: string;

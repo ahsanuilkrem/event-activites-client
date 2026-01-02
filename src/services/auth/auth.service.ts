@@ -21,12 +21,6 @@ export async function updateMyProfile(formData: FormData) {
 
         // Get all form fields except the file
         const data: any = {};
-        // formData.forEach((value, key) => {
-        //     if (key !== 'file' && value) {
-        //         data[key] = value;
-        //     }
-        // });
-
         formData.forEach((value, key) => {
             if (key !== "file" && value) {
                 if (key === "interests") {
@@ -48,17 +42,14 @@ export async function updateMyProfile(formData: FormData) {
             uploadFormData.append('file', file);
         }
 
-        // const response = await serverFetch.patch(`/user/update-my-profile`, {
-        //     body: uploadFormData,
-        // });
-          const response = await serverFetch.patch(`/profile/update`, {
+        const response = await serverFetch.patch(`/user/update-my-profile`, {
             body: uploadFormData,
         });
 
         const result = await response.json();
-
         revalidateTag("user-info", { expire: 0 });
         return result;
+        
     } catch (error: any) {
         console.log(error);
         return {

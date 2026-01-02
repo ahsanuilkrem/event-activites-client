@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "@/src/lib/utils";
-import { UserInfo } from "@/src/types/user.interface";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SheetTitle } from "../../ui/sheet";
@@ -10,10 +9,11 @@ import { Badge } from "../../ui/badge";
 import { Separator } from "../../ui/separator";
 import { NavSection } from "@/src/types/dashboard.interface";
 import { getIconComponent } from "@/src/lib/icon-mapper";
+import { IUser } from "@/src/types/user.interface";
 
 
 interface DashboardMobileSidebarContentProps {
-  userInfo: UserInfo;
+  userInfo: IUser;
   navItems: NavSection[];
   dashboardHome: string;
 }
@@ -29,7 +29,7 @@ const DashboardMobileSidebar = ({
       {/* Logo */}
       <div className="flex h-16 items-center border-b px-6">
         <Link href={dashboardHome}>
-          <span className="text-xl font-bold text-primary">PH Healthcare</span>
+          <span className="text-xl font-bold text-primary">Event Management</span>
         </Link>
       </div>
       <SheetTitle className="sr-only">Navigation Menu</SheetTitle>

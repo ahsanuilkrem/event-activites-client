@@ -34,7 +34,7 @@ export async function getMyJoinEvents(id: string) {
             `/event/my-event/${id}`
         );
         const result = await response.json();
-        console.log({ result });
+        // console.log({ result });
         return result;
     } catch (error: any) {
         console.error("Error fetching appointments:", error);
@@ -68,24 +68,3 @@ export async function geteventById(id: string) {
         };
     }
 }
-
-
-// export async function getMyJoinEvents(queryString?: string) {
-//     try {
-//         const response = await serverFetch.get(
-//             `/appointment/my-appointment${queryString ? `?${queryString}` : "?sortBy=createdAt&sortOrder=desc"}`
-//         );
-//         const result = await response.json();
-//         console.log({ result });
-//         return result;
-//     } catch (error: any) {
-//         console.error("Error fetching appointments:", error);
-//         return {
-//             success: false,
-//             message:
-//                 process.env.NODE_ENV === "development"
-//                     ? error.message
-//                     : "Failed to change appointment status",
-//         };
-//     }
-// }

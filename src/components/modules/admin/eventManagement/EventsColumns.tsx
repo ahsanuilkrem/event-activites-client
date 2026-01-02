@@ -2,50 +2,11 @@
 "use client";
 
 import { DateCell } from "@/src/components/shared/cell/DateCell";
-// import { DateCell } from "@/components/shared/cell/DateCell";
-// import { StatusBadgeCell } from "@/components/shared/cell/StatusBadgeCell";
 import { Column } from "@/src/components/shared/ManagementTable";
 import { IEvent } from "@/src/types/event.interface";
 import { Star } from "lucide-react";
 
 export const EventsColumns: Column<IEvent>[] = [
-  //   {
-  //     header: "Host",
-  //     accessor: (event) => (
-  //       <UserInfoCell
-  //         name={event.}
-  //         image={event.image as string}
-  //       />
-  //     ),
-  //     sortKey: "name",
-  //   },
-
-  // {
-  //   header: "Category",
-  //   accessor: (event) => {
-  //     // Handle both possible response structures
-  //     const categorys: any = event.category;
-  //     //  console.log("doctor", doctor)
-  //     if (!categorys || categorys.length === 0) {
-  //       return <span className="text-xs text-gray-500">No Category</span>;
-  //     }
-  //     return (
-  //       <div className="flex flex-wrap gap-1">
-  //         {categorys?.map((category: any, index: any) => {
-  //           // Handle nested specialty object
-  //           return (
-  //             <span
-  //               key={index}
-  //               className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300"
-  //             >
-  //               {category}
-  //             </span>
-  //           );
-  //         })}
-  //       </div>
-  //     );
-  //   },
-  // },
 
   {
     header: "EventName ",

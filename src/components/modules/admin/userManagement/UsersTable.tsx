@@ -9,8 +9,7 @@ import { toast } from "sonner";
 import DeleteConfirmationDialog from "@/src/components/shared/DeleteConfirmationDialog";
 import { deleteUser } from "@/src/services/admin/usersManagement";
 import { usersColumns } from "./usersColumns";
-
-
+import UserFormDialog from "./UserFormDialog";
 
 
 interface UsersTableProps {
@@ -22,7 +21,7 @@ const UsersTable = ({ users }: UsersTableProps) => {
   const [, startTransition] = useTransition();
   const [deletingUser, setDeletingUser] = useState<IUser | null>(null);
   const [viewingUser, setViewingUser] = useState<IUser | null>(null);
-  const [editingPatient, setEditingUser] = useState<IUser | null>(null);
+  const [editingUser, setEditingUser] = useState<IUser | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleRefresh = () => {
@@ -72,15 +71,15 @@ const UsersTable = ({ users }: UsersTableProps) => {
       />
 
       {/* Edit Patient Form Dialog */}
-      {/* <PatientFormDialog
-        open={!!editingPatient}
-        onClose={() => setEditingPatient(null)}
-        patient={editingPatient!}
+      <UserFormDialog
+        open={!!editingUser}
+        onClose={() => setEditingUser(null)}
+        user={editingUser!}
         onSuccess={() => {
-          setEditingPatient(null);
+          setEditingUser(null);
           handleRefresh();
         }}
-      /> */}
+      />
 
       {/* View Patient Detail Dialog */}
       {/* <UserViewDetailDialog

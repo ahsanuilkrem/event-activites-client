@@ -22,39 +22,39 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
   const [isPending, startTransition] = useTransition();
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  console.log("eror", error)
+  // console.log("eror", error)
   const [success, setSuccess] = useState<string | null>(null);
 
-  // const getProfilePhoto = () => {
-  //   if (userInfo.role === "ADMIN") {
-  //     return userInfo.profile?.profileImage;
-  //   } else if (userInfo.role === "HOST") {
-  //     return userInfo.profile?.profileImage;
-  //   } else if (userInfo.role === "USER") {
-  //     return userInfo.profile?.profileImage;
-  //   }
-  //   return null;
-  // };
+  const getProfilePhoto = () => {
+    if (userInfo.role === "ADMIN") {
+      return userInfo.profile?.profileImage;
+    } else if (userInfo.role === "HOST") {
+      return userInfo.profile?.profileImage;
+    } else if (userInfo.role === "USER") {
+      return userInfo.profile?.profileImage;
+    }
+    return null;
+  };
 
 
-  // const getProfileData = () => {
-  //   if (userInfo.role === "ADMIN") {
-  //     return userInfo.profile;
-  //   } else if (userInfo.role === "HOST") {
-  //     return userInfo.profile;
-  //   } else if (userInfo.role === "USER") {
-  //     return userInfo.profile;
-  //   }
-  //   return null;
-  // };
+  const getProfileData = () => {
+    if (userInfo.role === "ADMIN") {
+      return userInfo.profile;
+    } else if (userInfo.role === "HOST") {
+      return userInfo.profile;
+    } else if (userInfo.role === "USER") {
+      return userInfo.profile;
+    }
+    return null;
+  };
 
-  // const profilePhoto = getProfilePhoto();
-  // const profileData = getProfileData();
+  const profilePhoto = getProfilePhoto();
+  const profileData = getProfileData();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-
-    console.log(file)
+    
+    
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -70,7 +70,6 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
     setSuccess(null);
 
     const formData = new FormData(e.currentTarget);
-    console.log(formData)
     startTransition(async () => {
       const result = await updateMyProfile(formData);
 
@@ -105,9 +104,9 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
             <CardContent className="flex flex-col items-center space-y-4">
               <div className="relative">
                 <Avatar className="h-32 w-32">
-                  {previewImage || userInfo.profile?.profileImage ? (
+                  {previewImage || profilePhoto ? (
                     <AvatarImage
-                      src={previewImage || (userInfo.profile?.profileImage as string)}
+                      src={previewImage || (profilePhoto as string)}
                       alt={userInfo.name}
                     />
                   ) : (
@@ -134,7 +133,7 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
               </div>
 
               <div className="text-center">
-                <p className="font-semibold text-lg">{userInfo.name}</p>
+                <p className="font-semibold text-lg">{profileData?.name}</p>
                 <p className="text-sm text-muted-foreground">
                   {userInfo.email}
                 </p>
@@ -170,7 +169,7 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
                   <Input
                     id="name"
                     name="name"
-                    defaultValue={userInfo?.name}
+                    defaultValue={profileData?.name || userInfo?.name}
                     required
                     disabled={isPending}
                   />
@@ -181,13 +180,13 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
                   <Input
                     id="email"
                     type="email"
-                    value={userInfo.email}
+                    value={profileData?.email || userInfo.email}
                     disabled
                     className="bg-muted"
                   />
                 </div>
 
-                <div className="space-y-2">
+                {/* <div className="space-y-2">
                   <Label htmlFor="contactNumber">Contact Number</Label>
                   <Input
                     id="contactNumber"
@@ -195,14 +194,14 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
                     defaultValue={userInfo.contactNumber || ""}
                     disabled={isPending}
                   />
-                </div>
+                </div> */}
 
                 <div className="space-y-2">
                   <Label htmlFor="location">Location</Label>
                   <Input
                     id="location"
                     name="location"
-                    defaultValue={userInfo.profile?.location || ""}
+                    defaultValue={profileData?.location || ""}
                     disabled={isPending}
                   />
                 </div>
@@ -215,7 +214,7 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
                     id="interests"
                     name="interests"
                     placeholder="music, sports, tech"
-                    defaultValue={userInfo.profile?.interests.join(", ") || ""}
+                    defaultValue={profileData?.interests.join(", ") || ""}
                     disabled={isPending}
                   />
                 </div>
@@ -225,7 +224,7 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
                   <Textarea
                     id="bio"
                     name="bio"
-                    defaultValue={userInfo.profile?.bio || ""}
+                    defaultValue={profileData?.bio || ""}
                     disabled={isPending}
                   />
                 </div>

@@ -6,7 +6,6 @@ import {
     CheckCircle2,
     Clock,
     Loader2,
-    Stethoscope,
     User,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -106,8 +105,8 @@ const JoinEventConfirmation = ({
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <div>
-                            <p className="text-2xl font-semibold">{event.host?.name}</p>
-                            <p className="text-muted-foreground">{event.host?.bio}</p>
+                            <p className="text-2xl font-semibold">Name: {event.host?.name}</p>
+                            <p className="text-muted-foreground">Bio: {event.host?.bio}</p>
                         </div>
 
                         <Separator />
@@ -116,7 +115,7 @@ const JoinEventConfirmation = ({
                             event.host?.interests.length > 0 && (
                                 <div>
                                     <div className="flex items-center gap-2 mb-2">
-                                        <Stethoscope className="h-4 w-4 text-muted-foreground" />
+                                        {/* <Stethoscope className="h-4 w-4 text-muted-foreground" /> */}
                                         <span className="text-sm font-medium">Interests</span>
                                     </div>
                                     <div className="flex flex-wrap gap-2">
@@ -142,6 +141,21 @@ const JoinEventConfirmation = ({
                                     </span>
                                     <span className="text-sm font-medium">
                                         {event.host?.email}
+                                 
+                                    </span>
+                                </div>
+                            )}
+
+                        </div>
+
+                        <div className="space-y-2">
+                            {event.host?.location && (
+                                <div className="flex justify-between">
+                                    <span className="text-sm text-muted-foreground">
+                                        location:
+                                    </span>
+                                    <span className="text-sm font-medium">
+                                        {event.host?.location}
                                     </span>
                                 </div>
                             )}
@@ -182,89 +196,89 @@ const JoinEventConfirmation = ({
                                     </span>
                                 </div>
                             </div>
-                            
+
                             {/* Date */}
                             <Separator />
 
                             <div className="flex items-center gap-3">
                                 <Calendar className="w-4 h-4" />
                                 <div>
-                                    <p className="text-sm text-muted-foreground">Date</p>
+                                    <p className="text-sm text-muted-foreground">Event Join Date</p>
                                     <p className="text-lg font-semibold text-blue-900">
-                                       <DateCell date={event.date} />
+                                        <DateCell date={event.date} />
 
                                     </p>
                                 </div>
                             </div>
-                       
+
+
+                            <Separator />
+
+                            <div className="flex items-center gap-3">
+                                <Clock className="h-5 w-5 text-blue-600" />
+                                <div>
+                                    <p className="text-sm text-muted-foreground">Event Location</p>
+                                    <p className="text-lg font-semibold text-blue-900">
+                                        {event.location}
+
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="space-y-3 pt-4">
+                            <h3 className="font-semibold text-sm">Important Information</h3>
+                            <ul className="space-y-2 text-sm text-muted-foreground">
+
+                                <li className="flex items-start gap-2">
+                                    <span className="text-blue-600 mt-0.5">•</span>
+                                    <span>
+                                        You can cancel or reschedule from your Event page
+                                    </span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                    <span className="text-blue-600 mt-0.5">•</span>
+                                    <span>
+                                        A confirmation will be sent to your registered email
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
 
                         <Separator />
 
-                        <div className="flex items-center gap-3">
-                            <Clock className="h-5 w-5 text-blue-600" />
-                            <div>
-                                <p className="text-sm text-muted-foreground">Location</p>
-                                <p className="text-lg font-semibold text-blue-900">
-                                    {event.location}
+                        <div className="space-y-3 pt-2">
+                            <Button
+                                onClick={handleConfirmBooking}
+                                disabled={isBooking}
+                                className="w-full"
+                                size="lg"
+                            >
+                                {isBooking ? (
+                                    <>
+                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                        join...
+                                    </>
+                                ) : (
+                                    <>
+                                        <CheckCircle2 className="mr-2 h-4 w-4" />
+                                        Confirm & join Event
+                                    </>
+                                )}
+                            </Button>
 
-                                </p>
-                            </div>
+                            <Button
+                                variant="outline"
+                                onClick={() => router.back()}
+                                disabled={isBooking}
+                                className="w-full"
+                            >
+                                Go Back
+                            </Button>
                         </div>
-                    </div>
-
-                    <div className="space-y-3 pt-4">
-                        <h3 className="font-semibold text-sm">Important Information</h3>
-                        <ul className="space-y-2 text-sm text-muted-foreground">
-
-                            <li className="flex items-start gap-2">
-                                <span className="text-blue-600 mt-0.5">•</span>
-                                <span>
-                                    You can cancel or reschedule from your Event page
-                                </span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <span className="text-blue-600 mt-0.5">•</span>
-                                <span>
-                                    A confirmation will be sent to your registered email
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <Separator />
-
-                    <div className="space-y-3 pt-2">
-                        <Button
-                            onClick={handleConfirmBooking}
-                            disabled={isBooking}
-                            className="w-full"
-                            size="lg"
-                        >
-                            {isBooking ? (
-                                <>
-                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                    join...
-                                </>
-                            ) : (
-                                <>
-                                    <CheckCircle2 className="mr-2 h-4 w-4" />
-                                    Confirm & join Event
-                                </>
-                            )}
-                        </Button>
-
-                        <Button
-                            variant="outline"
-                            onClick={() => router.back()}
-                            disabled={isBooking}
-                            className="w-full"
-                        >
-                            Go Back
-                        </Button>
-                    </div>
-                </CardContent>
-            </Card>
-        </div>
+                    </CardContent>
+                </Card>
+            </div>
         </div >
     );
 };

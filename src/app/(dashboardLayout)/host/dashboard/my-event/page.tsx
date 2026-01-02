@@ -17,7 +17,7 @@ const MyEventsManagementPage = async ({
   const searchParamsObj = await searchParams;
   const queryString = queryStringFormatter(searchParamsObj);
   const eventsResult = await getMyEvent(queryString);
-  console.log(eventsResult.data)
+  // console.log(eventsResult.data)
 
   const totalPages = Math.ceil(
     eventsResult.data?.meta?.total / eventsResult.data?.meta?.limit
