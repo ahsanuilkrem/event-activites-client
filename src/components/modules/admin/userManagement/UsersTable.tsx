@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 "use client";
 
 import ManagementTable from "@/src/components/shared/ManagementTable";
@@ -20,7 +20,7 @@ const UsersTable = ({ users }: UsersTableProps) => {
   const router = useRouter();
   const [, startTransition] = useTransition();
   const [deletingUser, setDeletingUser] = useState<IUser | null>(null);
-  const [viewingUser, setViewingUser] = useState<IUser | null>(null);
+  // const [viewingUser, setViewingUser] = useState<IUser | null>(null);
   const [editingUser, setEditingUser] = useState<IUser | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -30,9 +30,9 @@ const UsersTable = ({ users }: UsersTableProps) => {
     });
   };
 
-  const handleView = (user: IUser) => {
-    setViewingUser(user);
-  };
+  // const handleView = (user: IUser) => {
+  //   setViewingUser(user);
+  // };
 
   const handleEdit = (user: IUser) => {
     setEditingUser(user);
@@ -63,7 +63,7 @@ const UsersTable = ({ users }: UsersTableProps) => {
       <ManagementTable
         data={users}
         columns={usersColumns}
-        onView={handleView}
+        // onView={handleView}
         onEdit={handleEdit}
         onDelete={handleDelete}
         getRowKey={(patient) => patient.id!}

@@ -14,6 +14,7 @@ import { getEvent } from '@/src/services/host/hostEvent.service';
   ]);
 
   const events = EventsResponse?.data || [];
+  console.log(events)
 
 export default function Home() {
   return (

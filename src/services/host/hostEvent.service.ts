@@ -20,7 +20,7 @@ export async function createEvent(_prevState: any, formData: FormData) {
             minParticipants: Number(formData.get("minParticipants")),
             maxParticipants: Number(formData.get("maxParticipants")),
             fee: Number(formData.get("fee")),
-           
+
         }
         if (zodValidator(payload, createEventZodSchema).success === false) {
             return zodValidator(payload, createEventZodSchema);
@@ -35,17 +35,21 @@ export async function createEvent(_prevState: any, formData: FormData) {
             newFormData.append("file", formData.get("file") as Blob)
         }
 
-        const response = await serverFetch.post("/event/create-event", { 
+        const response = await serverFetch.post("/event/create-event", {
             body: newFormData,
         })
 
-         const result = await response.json();
-        // if(result.success){
-        //     revalidateTag("event-list", "max");
-        // }
-        console.log(" createEvent", result)
+        const result = await response.json();
+        if (result.success) {
+            revalidateTag('events-list', { expire: 0 });
+            revalidateTag('events-page-1', { expire: 0 });
+            revalidateTag('events-search-all', { expire: 0 });
+            revalidateTag('admin-dashboard-meta', { expire: 0 });
+            revalidateTag('host-dashboard-meta', { expire: 0 });
+        }
+        // console.log(" createEvent", result)
         return result;
-        
+
     } catch (error: any) {
         console.log(error);
         return { success: false, message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}` }
@@ -55,9 +59,20 @@ export async function createEvent(_prevState: any, formData: FormData) {
 
 export async function getEvent(queryString?: string) {
     try {
-        const response = await fetch(`http://localhost:5000/api/v1/event${queryString ? `?${queryString}` :""}`, {
-            method:"GET",
-            next: {tags: ["event-list"]}
+        const searchParams = new URLSearchParams(queryString);
+        const page = searchParams.get("page") || "1";
+        const searchTerm = searchParams.get("searchTerm") || "all";
+        const response = await fetch(`http://localhost:5000/api/v1/event${queryString ? `?${queryString}` : ""}`, {
+            method: "GET",
+            next: {
+                tags: [
+                    "events-list",
+                    `events-page-${page}`,
+                    `events-search-${searchTerm}`,
+                ],
+                revalidate: 180
+            }
+
         })
         const result = await response.json();
         // console.log("get all event",result)
@@ -73,7 +88,7 @@ export async function getEvent(queryString?: string) {
 
 export async function getMyEvent(queryString?: string) {
     try {
-        const response = await serverFetch.get(`/event/my-event${queryString ? `?${queryString}` :""}`, {
+        const response = await serverFetch.get(`/event/my-event${queryString ? `?${queryString}` : ""}`, {
             // next: {tags: ["event-list"]}
         })
         const result = await response.json();
@@ -90,7 +105,12 @@ export async function getMyEvent(queryString?: string) {
 
 export async function getEventById(id: string) {
     try {
-        const response = await serverFetch.get(`/event/${id}`)
+        const response = await serverFetch.get(`/event/${id}`, {
+            next: {
+                tags: [`event-${id}, "events-list`],
+                revalidate: 180,
+            }
+        })
         const result = await response.json();
         // console.log("getEventById", result)
         return result;
@@ -103,7 +123,7 @@ export async function getEventById(id: string) {
     }
 }
 
-export async function UpdateEvent( id: string, _prevState: any, formData: FormData) {
+export async function UpdateEvent(id: string, _prevState: any, formData: FormData) {
     try {
         const payload: Partial<IEvent> = {
             EventName: formData.get("EventName") as string,
@@ -111,12 +131,12 @@ export async function UpdateEvent( id: string, _prevState: any, formData: FormDa
             date: formData.get("date") as string,
             category: formData.get("category") as string,
             location: formData.get("location") as string,
-            status: formData.get("status") as  "OPEN"| "FULL"| "CANCELLED" | "COMPLETED",
+            status: formData.get("status") as "OPEN" | "FULL" | "CANCELLED" | "COMPLETED",
             minParticipants: Number(formData.get("minParticipants")),
             maxParticipants: Number(formData.get("maxParticipants")),
-            fee: Number(formData.get("fee")),    
+            fee: Number(formData.get("fee")),
         }
-       
+
         if (zodValidator(payload, UpdateEventZodSchema).success === false) {
             return zodValidator(payload, UpdateEventZodSchema);
         }
@@ -130,18 +150,23 @@ export async function UpdateEvent( id: string, _prevState: any, formData: FormDa
             newFormData.append("file", formData.get("file") as Blob)
         }
 
-        const response = await serverFetch.patch(`/event/${id}`, { 
-           
-            body: newFormData, 
+        const response = await serverFetch.patch(`/event/${id}`, {
+
+            body: newFormData,
         })
 
-         const result = await response.json();
-        if(result.success){
-            revalidateTag("event-list", "max");
+        const result = await response.json();
+        if (result.success) {
+            revalidateTag('events-list', { expire: 0 });
+            revalidateTag('events-page-1', { expire: 0 });
+            revalidateTag(`event-${id}`, { expire: 0 });
+            revalidateTag('events-search-all', { expire: 0 });
+            revalidateTag('admin-dashboard-meta', { expire: 0 });
+            revalidateTag('host-dashboard-meta', { expire: 0 });
         }
         // console.log("UpdateEvent",result)
         return result;
-        
+
     } catch (error: any) {
         console.log(error);
         return { success: false, message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}` }
@@ -153,6 +178,14 @@ export async function deleteEvent(id: string) {
     try {
         const response = await serverFetch.delete(`/event/${id}`)
         const result = await response.json();
+        if (result.success) {
+            revalidateTag('events-list', { expire: 0 });
+            revalidateTag('events-page-1', { expire: 0 });
+            revalidateTag(`event-${id}`, { expire: 0 });
+            revalidateTag('events-search-all', { expire: 0 });
+            revalidateTag('admin-dashboard-meta', { expire: 0 });
+            revalidateTag('host-dashboard-meta', { expire: 0 });
+        }
         return result;
     } catch (error: any) {
         console.log(error);

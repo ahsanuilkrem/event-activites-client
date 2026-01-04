@@ -6,7 +6,7 @@ import { IJoinEventFormData } from "@/src/types/event.interface";
 
 export async function createJoinEvent(data: IJoinEventFormData) {
     try {
-        const response = await serverFetch.post("/event/joinEvent", {
+        const response = await serverFetch.post("/joinEvent", {
             body: JSON.stringify(data),
             headers: {
                 "Content-Type": "application/json",
@@ -28,10 +28,11 @@ export async function createJoinEvent(data: IJoinEventFormData) {
 }
 
 
-export async function getMyJoinEvents(id: string) {
+export async function getMyJoinEvents() {
     try {
         const response = await serverFetch.get(
-            `/event/my-event/${id}`
+            "/joinEvent/my-joinEvent"
+            // `/event/my-event/${id}` 
         );
         const result = await response.json();
         // console.log({ result });
@@ -50,7 +51,7 @@ export async function getMyJoinEvents(id: string) {
 
 export async function geteventById(id: string) {
     try {
-        const response = await serverFetch.get(`/event/eventId/${id}`);
+        const response = await serverFetch.get(`/joinEvent/eventId/${id}`);
         const result = await response.json();
         return {
             success: true,
@@ -68,3 +69,4 @@ export async function geteventById(id: string) {
         };
     }
 }
+

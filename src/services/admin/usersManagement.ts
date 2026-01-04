@@ -4,31 +4,51 @@ import { serverFetch } from "@/src/lib/server-fetch";
 
 
 export async function getUsers(queryString?: string) {
-    try {
-        const response = await serverFetch.get(`/user${queryString ? `?${queryString}` : ""}`);
-        const result = await response.json();
-        return result;
-    } catch (error: any) {
-        console.log(error);
-        return {
-            success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
-        };
-    }
+  try {
+    const searchParams = new URLSearchParams(queryString);
+    const page = searchParams.get("page") || "1";
+    const searchTerm = searchParams.get("searchTerm") || "all";
+    const response = await serverFetch.get(`/user${queryString ? `?${queryString}` : ""}`,
+      {
+        next: {
+          tags: [
+            "users-list",
+            `users-page-${page}`,
+            `users-search-${searchTerm}`,
+          ],
+          revalidate: 180
+        }
+
+      }
+    );
+    const result = await response.json();
+    return result;
+  } catch (error: any) {
+    console.log(error);
+    return {
+      success: false,
+      message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+    };
+  }
 }
 
 export async function getUserById(id: string) {
-    try {
-        const response = await serverFetch.get(`/user/${id}`)
-        const result = await response.json();
-        return result;
-    } catch (error: any) {
-        console.log(error);
-        return {
-            success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
-        };
-    }
+  try {
+    const response = await serverFetch.get(`/user/${id}`, {
+        next: {
+                tags: [`user-${id}, "users-list`],
+                revalidate: 180,
+            }
+    })
+    const result = await response.json();
+    return result;
+  } catch (error: any) {
+    console.log(error);
+    return {
+      success: false,
+      message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+    };
+  }
 }
 
 export async function changeUserStatus(
@@ -65,15 +85,15 @@ export async function changeUserStatus(
 
 
 export async function deleteUser(id: string) {
-    try {
-        const response = await serverFetch.delete(`/user/${id}`)
-        const result = await response.json();
-        return result;
-    } catch (error: any) {
-        console.log(error);
-        return {
-            success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
-        };
-    }
+  try {
+    const response = await serverFetch.delete(`/user/${id}`)
+    const result = await response.json();
+    return result;
+  } catch (error: any) {
+    console.log(error);
+    return {
+      success: false,
+      message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+    };
+  }
 }

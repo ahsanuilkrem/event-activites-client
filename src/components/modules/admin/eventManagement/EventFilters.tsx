@@ -57,43 +57,6 @@ const EventFilters = () => {
 // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedCategory, debouncedlocation, debouncedDate]);
 
-  // const toggleSpecialty = (specialtyId: string) => {
-  //   const newSelection = localSpecialties.includes(specialtyId)
-  //     ? localSpecialties.filter((id) => id !== specialtyId)
-  //     : [...localSpecialties, specialtyId];
-
-  //   setLocalSpecialties(newSelection);
-  // };
-
-//   const applySpecialtyFilter = () => {
-//     const params = new URLSearchParams(searchParams.toString());
-//     params.delete("specialties");
-//     if (localSpecialties.length > 0) {
-//       localSpecialties.forEach((val) => params.append("specialties", val));
-//     }
-//     params.set("page", "1");
-
-//     startTransition(() => {
-//       router.push(`?${params.toString()}`);
-//     });
-//     setOpen(false);
-//   };
-
-  // const clearAllFilters = () => {
-  //   setGenderInput("");
-  //   setEmailInput("");
-  //   setContactNumberInput("");
-  //   setLocalSpecialties([]);
-  //   startTransition(() => {
-  //     router.push(window.location.pathname);
-  //   });
-  // };
-
-  // const activeFiltersCount =
-  //   localSpecialties.length +
-  //   (genderInput ? 1 : 0) +
-  //   (emailInput ? 1 : 0) +
-  //   (contactNumberInput ? 1 : 0);
 
   return (
     <div className="space-y-3">

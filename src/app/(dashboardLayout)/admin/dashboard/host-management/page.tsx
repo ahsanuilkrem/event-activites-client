@@ -16,8 +16,6 @@ const AdminUsersManagementPage = async ({
   const searchParamsObj = await searchParams;
   const queryString = queryStringFormatter(searchParamsObj);
   const hostsResult = await getHosts(queryString);
-//   console.log("host", hostsResult)
-
   const totalPages = Math.ceil(
     (hostsResult?.meta?.total || 1) / (hostsResult?.meta?.limit || 1)
   );

@@ -1,15 +1,12 @@
 import JoinEventList from "@/src/components/modules/users/JoinEventList";
-import { getUserInfo } from "@/src/services/auth/getUserInfo";
 import { getMyJoinEvents } from "@/src/services/users/joinEvent.service";
 import { IJoinEvent } from "@/src/types/event.interface";
+import { Suspense } from 'react';
 
 export default async function MyEventPage() {
-    const user = await getUserInfo();
-    // console.log(user)
-    const userId: string = user?.profile?.id
-    //  console.log(userId)
+ 
     const [response] = await Promise.all([
-        getMyJoinEvents(userId),
+        getMyJoinEvents(),
 
     ]);
     const events: IJoinEvent[] = response?.data.data || [];
@@ -22,8 +19,10 @@ export default async function MyEventPage() {
                     View and manage your Events
                 </p>
             </div>
-
-            <JoinEventList events={events} />
+                <Suspense fallback={<div>Loadinng My event...</div>}>
+                     <JoinEventList events={events} />
+                </Suspense>
+           
         </div>
     );
 }

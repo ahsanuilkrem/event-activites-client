@@ -1,71 +1,3 @@
-// import {  SparkleIcon, } from "lucide-react";
-// import { Button } from "../../ui/button";
-
-
-// const Hero = () => {
-//     return (
-//         <div className="w-full relative">
-//             {/* Radial Gradient Background from Bottom */}
-//             <div
-//                 className="absolute inset-0 z-0 "
-//                 style={{
-//                     background:
-//                         "radial-gradient(125% 125% at 50% 90%, #fff 30%, #155DFC 100%)",
-//                 }}
-//             />
-//             {/* Content Container */}
-//             <div className="w-full px-4 py-8 md:px-8 lg:px-16 relative">
-//                 <div className="mx-auto max-w-[1200px]">
-//                     <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
-//                         {/* Left Column - Hero Content */}
-//                         <div className="flex flex-col justify-center space-y-6">
-//                             {/* Badge */}
-//                             <div className="inline-flex items-center gap-3 self-start rounded-full bg-white px-4 py-2">
-//                                 <SparkleIcon />
-//                                 <span className="text-[11.9px] font-medium text-blue-700">
-//                                    Over 5,000 active members
-//                                 </span>
-//                             </div>
-
-//                             {/* Heading */}
-//                             <div className="space-y-2">
-//                                 <h1 className="text-[51px] leading-[60px]">Find your people.</h1>
-//                                 <h1 className="text-[51px] leading-[60px]">Love your city.</h1>
-//                             </div>
-
-//                             {/* Description */}
-//                             <div className="space-y-1 text-[17px] leading-7 text-gray-600">
-//                                 Join the most vibrant community of explorers, creators,
-//                                 and doers. Discover local events, meet new friends, and make every weekend count.
-//                             </div>
-
-//                             {/* Buttons */}
-//                             <div className="flex flex-col gap-4 sm:flex-row">
-//                                 <Button
-//                                     className="h-[63.622px] gap-3 rounded-xl bg-blue-600 px-8 text-[15.3px] hover:bg-blue-700" >
-//                                     Join the    Community
-//                                 </Button>
-//                                 <Button variant="outline"
-//                                     className="h-[63.622px] gap-3 rounded-xl border-blue-600 px-8 text-[15.3px] text-blue-600 hover:bg-blue-50">
-//                                         Browse Events
-//                                 </Button>
-//                             </div>
-//                         </div>
-
-//                         {/* Right Column - Form Card */}
-//                         <div className="flex items-center justify-center lg:justify-end">
-//                             {/* <div className="w-full max-w-[559.929px] rounded-2xl bg-white p-8 shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]">
-
-//                             </div> */}
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default Hero;
 
 "use client";
 
@@ -74,6 +6,7 @@ import { ArrowRight, MapPin, Users } from "lucide-react";
 import Image from "next/image";
 import type { FC } from "react";
 import { Button } from "../../ui/button";
+import Link from "next/link";
 
 export const Hero: FC = () => {
     return (
@@ -112,13 +45,15 @@ export const Hero: FC = () => {
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4">
+                            <Link href="/consultation">
                             <Button size="lg">
                                 Join the Community
                                 <ArrowRight size={20} className="ml-2" />
                             </Button>
-                            <Button variant="outline" size="lg">
+                            </Link>
+                            {/* <Button variant="outline" size="lg">
                                 Browse Events
-                            </Button>
+                            </Button> */}
                         </div>
 
                         {/* Small stats */}

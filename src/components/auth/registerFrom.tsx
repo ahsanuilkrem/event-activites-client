@@ -11,7 +11,6 @@ import InputFieldError from "../shared/InputFieldError";
 
 const RegisterForm = () => {
   const [state, formAction, isPending] = useActionState(registerUser, null);
-   console.log(state, "state");
 
    useEffect(() => {
     if (state && !state.success && state.message) {

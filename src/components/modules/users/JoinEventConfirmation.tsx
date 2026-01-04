@@ -141,7 +141,7 @@ const JoinEventConfirmation = ({
                                     </span>
                                     <span className="text-sm font-medium">
                                         {event.host?.email}
-                                 
+
                                     </span>
                                 </div>
                             )}
@@ -156,6 +156,21 @@ const JoinEventConfirmation = ({
                                     </span>
                                     <span className="text-sm font-medium">
                                         {event.host?.location}
+                                        {event.host?.user?.contactNumber}
+                                    </span>
+                                </div>
+                            )}
+
+                        </div>
+
+                        <div className="space-y-2">
+                            {event.host?.user?.contactNumber && (
+                                <div className="flex justify-between">
+                                    <span className="text-sm text-muted-foreground">
+                                        ContactNumber:
+                                    </span>
+                                    <span className="text-sm font-medium">
+                                        {event.host?.user?.contactNumber}
                                     </span>
                                 </div>
                             )}

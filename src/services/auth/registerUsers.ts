@@ -9,7 +9,7 @@ import { serverFetch } from "@/src/lib/server-fetch";
 
 export const registerUser = async (_currentState: any, formData: any): Promise<any> => {
     try {
-        // console.log(formData.get("address"));
+        
         const payload = {
             name: formData.get('name'),
             contactNumber: formData.get('contactNumber'),
@@ -46,7 +46,7 @@ export const registerUser = async (_currentState: any, formData: any): Promise<a
         })
 
         const result = await res.json();
-        // console.log(res, "res");
+       
 
         if (result.success) {
             await loginUser(_currentState, formData);

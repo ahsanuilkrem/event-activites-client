@@ -71,8 +71,6 @@ const EventContent = ({ event }: EventContentProps) => {
             </Card>
 
             {/* Event Details */}
-            {/* <div className="flex-1 overflow-y-auto px-6 pb-6"> */}
-
             <Card className="w-full  mx-auto pt-0 ">
                 {/* Image */}
                 {event.image && (
@@ -179,7 +177,7 @@ const EventContent = ({ event }: EventContentProps) => {
 
                 </CardContent>
             </Card>
-            {/* </div> */}
+           
 
         </div>
     );

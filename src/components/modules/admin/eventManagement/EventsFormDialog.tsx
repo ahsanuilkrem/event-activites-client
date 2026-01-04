@@ -45,8 +45,6 @@ const EventsFormDialog = ({
     isEdit ? UpdateEvent.bind(null, event.id!) : createEvent,
     null
   );
-  // console.log(formAction)
-
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

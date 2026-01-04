@@ -3,6 +3,7 @@ import JoinEventDetails from "@/src/components/modules/users/JoinEventDetails";
 import { geteventById } from "@/src/services/users/joinEvent.service";
 import { IJoinEvent } from "@/src/types/event.interface";
 import { notFound } from "next/navigation";
+export const dynamic = "force-dynamic";
 
 interface EventDetailPageProps {
   params: Promise<{

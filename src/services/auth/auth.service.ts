@@ -8,9 +8,10 @@ import { getUserInfo } from "./getUserInfo";
 import { deleteCookie, getCookie, setCookie } from "./tokenHandlers";
 import { serverFetch } from "@/src/lib/server-fetch";
 import { zodValidator } from "@/src/lib/zodValidator";
-import { resetPasswordSchema } from "@/src/zod/auth.validation";
+import { changePasswordSchema, forgotPasswordSchema, resetPasswordSchema } from "@/src/zod/auth.validation";
 import { getDefaultDashboardRoute, isValidRedirectForRole, UserRole } from "@/src/lib/auth-utils";
 import { verifyAccessToken } from "@/src/lib/jwtHanlders";
+
 
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -142,6 +143,102 @@ export async function resetPassword(_prevState: any, formData: FormData) {
     }
 }
 
+
+// Reset Password
+// export async function resetPassword(_prevState: any, formData: FormData) {
+//     const isEmailReset = formData.get("isEmailReset") === "true";
+//     const email = formData.get("email") as string;
+//     const token = formData.get("token") as string;
+
+
+
+
+//     // Build validation payload
+//     const validationPayload = {
+//         newPassword: formData.get("newPassword") as string,
+//         confirmPassword: formData.get("confirmPassword") as string,
+//     };
+
+//     // Validate
+//     const validatedPayload = zodValidator(
+//         validationPayload,
+//         resetPasswordSchema
+//     );
+
+//     if (!validatedPayload.success && validatedPayload.errors) {
+//         return {
+//             success: false,
+//             message: "Validation failed",
+//             formData: validationPayload,
+//             errors: validatedPayload.errors,
+//         };
+//     }
+
+//     try {
+
+//         if (token) {
+//             jwt.verify(token, process.env.RESET_PASS_TOKEN as string);
+//         }
+
+//         let response;
+
+//         if (isEmailReset) {
+//             // Case 1: Password reset from email link (with token)
+//             if (!email || !token) {
+//                 return {
+//                     success: false,
+//                     message: "Invalid reset link",
+//                 };
+//             }
+
+//             response = await serverFetch.post("/auth/reset-password", {
+//                 headers: {
+//                     "Content-Type": "application/json",
+//                     Authorization: `Bearer ${token}`,
+//                 },
+//                 body: JSON.stringify({
+//                     email: email,
+//                     password: validationPayload.newPassword,
+//                 }),
+//             });
+//         } else {
+//             // Case 2: Newly created user (authenticated, needPasswordChange)
+//             response = await serverFetch.post("/auth/reset-password", {
+//                 headers: {
+//                     "Content-Type": "application/json",
+//                 },
+//                 body: JSON.stringify({
+//                     password: validationPayload.newPassword,
+//                 }),
+//             });
+//         }
+
+//         const result = await response.json();
+
+
+//         if (!result.success) {
+//             throw new Error(result.message || "Password reset failed");
+//         }
+
+//         if (result.success) {
+//             revalidateTag("user-info", { expire: 0 });
+//         }
+
+//         return {
+//             success: true,
+//             message: "Password reset successfully! Redirecting to login...",
+//             redirectToLogin: true,
+//         };
+//     } catch (error: any) {
+//         return {
+//             success: false,
+//             message: error?.message || "Something went wrong",
+//             formData: validationPayload,
+//         };
+//     }
+// }
+
+
 export async function getNewAccessToken() {
     try {
         const accessToken = await getCookie("accessToken");
@@ -254,4 +351,109 @@ export async function getNewAccessToken() {
         };
     }
 
+}
+
+export async function forgotPassword(_prevState: any, formData: FormData) {
+    // Build validation payload
+    const validationPayload = {
+        email: formData.get("email") as string,
+    };
+
+    // Validate
+    const validatedPayload = zodValidator(
+        validationPayload,
+        forgotPasswordSchema
+    );
+
+    if (!validatedPayload.success && validatedPayload.errors) {
+        return {
+            success: false,
+            message: "Validation failed",
+            formData: validationPayload,
+            errors: validatedPayload.errors,
+        };
+    }
+
+    try {
+        // API Call
+        const response = await serverFetch.post("/auth/forgot-password", {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: validationPayload.email,
+            }),
+        });
+
+        const result = await response.json();
+
+        if (!result.success) {
+            throw new Error(result.message || "Failed to send reset link");
+        }
+
+        return {
+            success: true,
+            message: "Password reset link has been sent to your email!",
+        };
+    } catch (error: any) {
+        return {
+            success: false,
+            message: error?.message || "Something went wrong",
+            formData: validationPayload,
+        };
+    }
+}
+
+export async function changePassword(_prevState: any, formData: FormData) {
+    // Build validation payload
+    const validationPayload = {
+        oldPassword: formData.get("oldPassword") as string,
+        newPassword: formData.get("newPassword") as string,
+        confirmPassword: formData.get("confirmPassword") as string,
+    };
+
+    // Validate
+    const validatedPayload = zodValidator(
+        validationPayload,
+        changePasswordSchema
+    );
+
+    if (!validatedPayload.success && validatedPayload.errors) {
+        return {
+            success: false,
+            message: "Validation failed",
+            formData: validationPayload,
+            errors: validatedPayload.errors,
+        };
+    }
+
+    try {
+        // API Call
+        const response = await serverFetch.post("/auth/change-password", {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                oldPassword: validationPayload.oldPassword,
+                newPassword: validationPayload.newPassword,
+            }),
+        });
+
+        const result = await response.json();
+
+        if (!result.success) {
+            throw new Error(result.message || "Password change failed");
+        }
+
+        return {
+            success: true,
+            message: result.message || "Password changed successfully!",
+        };
+    } catch (error: any) {
+        return {
+            success: false,
+            message: error?.message || "Something went wrong",
+            formData: validationPayload,
+        };
+    }
 }
