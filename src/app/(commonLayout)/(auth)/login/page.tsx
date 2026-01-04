@@ -23,3 +23,4 @@ const LoginPage = async ({ searchParams }: { searchParams?: Promise<{ redirect?:
 };
 
 export default LoginPage;
+

@@ -7,17 +7,21 @@ import { TableSkeleton } from "@/src/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/src/lib/formatters";
 import { getEvent } from "@/src/services/host/hostEvent.service";
 import { Suspense } from "react";
-
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 const AdminEventsManagementPage = async ({
   searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  // searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-  const searchParamsObj = await searchParams;
-  const queryString = queryStringFormatter(searchParamsObj);
+  // const searchParamsObj = await searchParams;
+  const queryString = queryStringFormatter(searchParams);
   const eventsResult = await getEvent(queryString);
-
+    if (!eventsResult?.data || !eventsResult?.meta) {
+    return <div className="text-red-500">Failed to load events</div>;
+  }
   const totalPages = Math.ceil(
     eventsResult.meta?.total / eventsResult.meta.limit
   );
