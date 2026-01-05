@@ -6,8 +6,8 @@ import { queryStringFormatter } from "@/src/lib/formatters";
 import { getEvent } from "@/src/services/host/hostEvent.service";
 import { Suspense } from "react";
 
-// ISR: Revalidate every 10 minutes for doctor listings
-export const revalidate = 600;
+// ISR: Revalidate every 10 minutes for event listings
+// export const revalidate = 600;
 
 const ConsultationPage = async ({
   searchParams,
@@ -24,7 +24,7 @@ const ConsultationPage = async ({
   ]);
 
   const events = EventsResponse?.data || [];
-
+  //  console.log(events)
 
   return (
     <div className="container mx-auto px-4 py-8">

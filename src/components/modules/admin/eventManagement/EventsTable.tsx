@@ -18,6 +18,7 @@ interface EventsTableProps {
 }
 
 const EventsTable = ({events} : EventsTableProps) => {
+  //  console.log("event", events )
   const router = useRouter();
   const [, startTransition] = useTransition();
   const [deletingEvent, setDeletingEvent] = useState<IEvent | null>(null);
