@@ -20,7 +20,7 @@ const AdminEventsManagementPage = async ({
     getEvent(queryString),
 
   ]);
-  // console.log("event", eventsResult )
+  //  console.log("event", eventsResult )
   const events = eventsResult?.data || [];
   // console.log("event", events )
 

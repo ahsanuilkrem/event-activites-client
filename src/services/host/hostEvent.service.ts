@@ -57,21 +57,10 @@ export async function createEvent(_prevState: any, formData: FormData) {
 
 export async function getEvent(queryString?: string) {
     try {
-        // const searchParams = new URLSearchParams(queryString);
-        // const page = searchParams.get("page") || "1";
-        // const searchTerm = searchParams.get("searchTerm") || "all";
-        const response = await fetch(`http://localhost:5000/api/v1/event${queryString ? `?${queryString}` : ""}`, {
-            method: "GET",
-            // next: {
-            //     tags: [
-            //         "events-list",
-            //         `events-page-${page}`,
-            //         `events-search-${searchTerm}`,
-            //     ],
-            //     revalidate: 180
-            // }
-
-        })
+        const response = await serverFetch.get(`/event${queryString ? `?${queryString}` : ""}`)
+        // const response = await fetch(`http://localhost:5000/api/v1/event${queryString ? `?${queryString}` : ""}`, {
+        //     method: "GET",
+        // })
         const result = await response.json();
         // console.log("get all event",result)
         return result;
