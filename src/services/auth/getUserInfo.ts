@@ -12,8 +12,7 @@ export const getUserInfo = async (): Promise<IUser | any> => {
     try {
 
         const response = await serverFetch.get("/auth/me", {
-            cache: "force-cache",
-            next: { tags: ["user-info"] }
+            next: { tags: ["user-info"], revalidate:180 }
         })
 
         const result = await response.json();

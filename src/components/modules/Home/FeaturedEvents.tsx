@@ -40,7 +40,7 @@ export function FeaturedEvents({ events }: EventGridProps) {
 
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {events?.slice(0, 3).map((event, index) => (
+          {events?.slice(0, 4).map((event, index) => (
             <motion.div
               key={event.id}
               initial={{ opacity: 0, y: 20 }}

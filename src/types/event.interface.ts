@@ -21,6 +21,14 @@ export interface IEvent {
     host?: IHost;
 }
 
+export enum EventStatus {
+  OPEN = "OPEN",
+  FULL = "FULL",
+  CANCELLED = "CANCELLED",
+  COMPLETED = "COMPLETED",
+}
+
+
 export enum PaymentStatus {
   PENDING = "PENDING",
   SUCCESS = "SUCCESS",
@@ -37,7 +45,7 @@ export interface IJoinEvent {
     createdAt: string;
     updatedAt: string;
     review?: IReview;          
-    // payment      
+    payment?: IPayment;      
 
 }
 

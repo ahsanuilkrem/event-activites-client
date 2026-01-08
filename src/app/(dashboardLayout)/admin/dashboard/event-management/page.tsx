@@ -7,7 +7,6 @@ import { TableSkeleton } from "@/src/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/src/lib/formatters";
 import { getEvent } from "@/src/services/host/hostEvent.service";
 import { Suspense } from "react";
-// export const revalidate = 600;
 
 const AdminEventsManagementPage = async ({
   searchParams,

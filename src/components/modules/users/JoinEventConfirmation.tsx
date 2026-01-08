@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import { createJoinEvent } from "@/src/services/users/joinEvent.service";
+import { createEventWithPayLater, createJoinEvent } from "@/src/services/users/joinEvent.service";
 import { IEvent } from "@/src/types/event.interface";
 import {
     Calendar,
     CheckCircle2,
     Clock,
+    CreditCard,
     Loader2,
     User,
 } from "lucide-react";
@@ -25,6 +27,8 @@ const JoinEventConfirmation = ({
     event,
 }: JoinEventConfirmationProps) => {
     const router = useRouter();
+    const [isPayingNow, setIsPayingNow] = useState(false);
+    const [isPayingLater, setIsPayingLater] = useState(false);
     const [isBooking, setIsBooking] = useState(false);
     const [bookingSuccess, setBookingSuccess] = useState(false);
 
@@ -35,11 +39,12 @@ const JoinEventConfirmation = ({
             const result = await createJoinEvent({
                 eventId: event.id!,
             });
-
-            if (result.success) {
+            if (result.success && result.data.paymentUrl) {
+                toast.success("Redirecting to payment...");
+                window.location.replace(result.data.paymentUrl);
+            } else if (result.success) {
                 setBookingSuccess(true);
                 toast.success("Event join successfully!");
-
                 // Redirect after 2 seconds
                 setTimeout(() => {
                     router.push("/dashboard/my-event");
@@ -54,6 +59,36 @@ const JoinEventConfirmation = ({
             console.error(error);
         }
     };
+
+    const handlePayLater = async () => {
+        setIsPayingLater(true);
+        try {
+            const result = await createEventWithPayLater({
+                eventId: event.id!,
+
+            });
+            if (result.success) {
+                setBookingSuccess(true);
+                toast.success(
+                    "Event join! You can pay later from your my event page."
+                );
+
+                // Redirect after 2 seconds
+                setTimeout(() => {
+                    router.push("/dashboard/my-event");
+                }, 2000);
+            } else {
+                toast.error(result.message || "Failed to book appointment");
+                console.log("error", result.message)
+                setIsPayingLater(false);
+            }
+        } catch (error) {
+            toast.error("An error occurred while booking the event");
+            setIsPayingLater(false);
+            console.error(error);
+        }
+    };
+
 
     if (bookingSuccess) {
         return (
@@ -269,7 +304,18 @@ const JoinEventConfirmation = ({
                                 className="w-full"
                                 size="lg"
                             >
-                                {isBooking ? (
+                                {isPayingNow ? (
+                                    <>
+                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                        Processing Payment...
+                                    </>
+                                ) : (
+                                    <>
+                                        <CreditCard className="mr-2 h-4 w-4" />
+                                        Pay Now & Event join
+                                    </>
+                                )}
+                                {/* {isBooking ? (
                                     <>
                                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                                         join...
@@ -278,6 +324,26 @@ const JoinEventConfirmation = ({
                                     <>
                                         <CheckCircle2 className="mr-2 h-4 w-4" />
                                         Confirm & join Event
+                                    </>
+                                )} */}
+                            </Button>
+
+                            <Button
+                                onClick={handlePayLater}
+                                disabled={isBooking}
+                                variant="outline"
+                                className="w-full"
+                                size="lg"
+                            >
+                                {isPayingLater ? (
+                                    <>
+                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                        Join Event...
+                                    </>
+                                ) : (
+                                    <>
+                                        <CheckCircle2 className="mr-2 h-4 w-4" />
+                                        join Now, Pay Later
                                     </>
                                 )}
                             </Button>

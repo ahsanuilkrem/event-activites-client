@@ -48,7 +48,9 @@ export async function updateMyProfile(formData: FormData) {
         });
 
         const result = await response.json();
-        revalidateTag("user-info", { expire: 0 });
+        if(result.succeess){
+            revalidateTag("user-info", { expire: 0 });
+        }
         return result;
         
     } catch (error: any) {

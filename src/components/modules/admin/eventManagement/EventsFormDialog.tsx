@@ -177,7 +177,7 @@ const EventsFormDialog = ({
                 defaultValue={
                   state?.formData?.minParticipants || (isEdit ? event?.minParticipants : "")
                 }
-                min="0"
+                min="20"
               />
               <InputFieldError state={state} field="minParticipants" />
             </Field>
@@ -195,7 +195,7 @@ const EventsFormDialog = ({
                 defaultValue={
                   state?.formData?.maxParticipants || (isEdit ? event?.maxParticipants : "")
                 }
-                max="100"
+                max="1000"
               />
               <InputFieldError state={state} field="maxParticipants" />
             </Field>

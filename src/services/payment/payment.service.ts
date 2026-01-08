@@ -3,8 +3,6 @@
 import { serverFetch } from "@/src/lib/server-fetch";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-
 export async function initiatePayment(joinEventId: string) {
     try {
         const response = await serverFetch.post(`/payment/${joinEventId}/initiate-payment`, {

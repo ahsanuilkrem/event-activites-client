@@ -6,6 +6,7 @@ import { serverFetch } from "@/src/lib/server-fetch";
 import { zodValidator } from "@/src/lib/zodValidator";
 import { IEvent } from "@/src/types/event.interface";
 import { createEventZodSchema, UpdateEventZodSchema } from "@/src/zod/event.validation";
+import { revalidateTag } from "next/cache";
 
 export async function createEvent(_prevState: any, formData: FormData) {
     try {
@@ -38,13 +39,13 @@ export async function createEvent(_prevState: any, formData: FormData) {
         })
 
         const result = await response.json();
-        // if (result.success) {
-        //     revalidateTag('events-list', { expire: 0 });
-        //     revalidateTag('events-page-1', { expire: 0 });
-        //     revalidateTag('events-search-all', { expire: 0 });
-        //     revalidateTag('admin-dashboard-meta', { expire: 0 });
-        //     revalidateTag('host-dashboard-meta', { expire: 0 });
-        // }
+        if (result.success) {
+            revalidateTag('events-list', { expire: 0 });
+            revalidateTag('events-page-1', { expire: 0 });
+            revalidateTag('events-search-all', { expire: 0 });
+            revalidateTag('admin-dashboard-meta', { expire: 0 });
+            revalidateTag('host-dashboard-meta', { expire: 0 });
+        }
         // console.log(" createEvent", result)
         return result;
 
@@ -57,10 +58,9 @@ export async function createEvent(_prevState: any, formData: FormData) {
 
 export async function getEvent(queryString?: string) {
     try {
-        const response = await serverFetch.get(`/event${queryString ? `?${queryString}` : ""}`)
-        // const response = await fetch(`http://localhost:5000/api/v1/event${queryString ? `?${queryString}` : ""}`, {
-        //     method: "GET",
-        // })
+        const response = await serverFetch.get(`/event${queryString ? `?${queryString}` : ""}`, {
+            next: {tags: ["event-list"], revalidate:180}
+        })
         const result = await response.json();
         // console.log("get all event",result)
         return result;
@@ -76,7 +76,7 @@ export async function getEvent(queryString?: string) {
 export async function getMyEvent(queryString?: string) {
     try {
         const response = await serverFetch.get(`/event/my-event${queryString ? `?${queryString}` : ""}`, {
-            // next: {tags: ["event-list"]}
+             next: {tags: ["event-list"], revalidate:180}
         })
         const result = await response.json();
         // console.log("get all My event",result)
@@ -94,7 +94,7 @@ export async function getEventById(id: string) {
     try {
         const response = await serverFetch.get(`/event/${id}`, {
             next: {
-                tags: [`event-${id}, "events-list`],
+                tags: [`event-${id}, "events-list"`],
                 revalidate: 180,
             }
         })
@@ -143,14 +143,14 @@ export async function UpdateEvent(id: string, _prevState: any, formData: FormDat
         })
 
         const result = await response.json();
-        // if (result.success) {
-        //     revalidateTag('events-list', { expire: 0 });
-        //     revalidateTag('events-page-1', { expire: 0 });
-        //     revalidateTag(`event-${id}`, { expire: 0 });
-        //     revalidateTag('events-search-all', { expire: 0 });
-        //     revalidateTag('admin-dashboard-meta', { expire: 0 });
-        //     revalidateTag('host-dashboard-meta', { expire: 0 });
-        // }
+        if (result.success) {
+            revalidateTag('events-list', { expire: 0 });
+            revalidateTag('events-page-1', { expire: 0 });
+            revalidateTag(`event-${id}`, { expire: 0 });
+            revalidateTag('events-search-all', { expire: 0 });
+            revalidateTag('admin-dashboard-meta', { expire: 0 });
+            revalidateTag('host-dashboard-meta', { expire: 0 });
+        }
         // console.log("UpdateEvent",result)
         return result;
 
@@ -165,14 +165,14 @@ export async function deleteEvent(id: string) {
     try {
         const response = await serverFetch.delete(`/event/${id}`)
         const result = await response.json();
-        // if (result.success) {
-        //     revalidateTag('events-list', { expire: 0 });
-        //     revalidateTag('events-page-1', { expire: 0 });
-        //     revalidateTag(`event-${id}`, { expire: 0 });
-        //     revalidateTag('events-search-all', { expire: 0 });
-        //     revalidateTag('admin-dashboard-meta', { expire: 0 });
-        //     revalidateTag('host-dashboard-meta', { expire: 0 });
-        // }
+        if (result.success) {
+            revalidateTag('events-list', { expire: 0 });
+            revalidateTag('events-page-1', { expire: 0 });
+            revalidateTag(`event-${id}`, { expire: 0 });
+            revalidateTag('events-search-all', { expire: 0 });
+            revalidateTag('admin-dashboard-meta', { expire: 0 });
+            revalidateTag('host-dashboard-meta', { expire: 0 });
+        }
         return result;
     } catch (error: any) {
         console.log(error);
