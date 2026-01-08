@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import LogoutSuccessToast from "../components/shared/LogoutSuccessToast";
 import LoginSuccessToast from "../components/shared/LoginSuccessToast";
 import { Suspense } from "react";
+export const dynamic = "force-dynamic";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
