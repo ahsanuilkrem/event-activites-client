@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 "use server"
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { getCookie } from "./tokenHandlers";
@@ -44,7 +45,7 @@ export const getUserInfo = async (): Promise<IUser | any> => {
 
         return userInfo;
     } catch (error: any) {
-        console.log(error);
+         console.log(error);
         return {
             id: "",
             name: "",

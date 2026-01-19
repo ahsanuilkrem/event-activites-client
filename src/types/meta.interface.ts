@@ -12,6 +12,7 @@ export interface IAdminDashboardMeta {
     joinEventCount: number;
     userCount: number;
     hostCount: number;
+    eventCount: number;
     adminCount?: number; // Only for super admin
     paymentCount: number;
     totalRevenue: {
@@ -25,20 +26,20 @@ export interface IAdminDashboardMeta {
 
 export interface IHostDashboardMeta {
     joinEventCount: number;
-    useuCount: number;
+    eventCount: number;
     reviewCount: number;
     totalRevenue: {
         _sum: {
             amount: number | null;
         };
     };
-    formattedAppointmentStatusDistribution: IPieChartData[];
+    formattedEventParticipantStatusDistribution: IPieChartData[];
 }
 
 export interface IUserDashboardMeta {
-    joinEventCount: number;
+    userCount: number;
     reviewCount: number;
-    formattedAppointmentStatusDistribution: IPieChartData[];
+    formattedEventParticipantStatusDistribution: IPieChartData[];
 }
 
 export type IDashboardMeta = IAdminDashboardMeta | IHostDashboardMeta | IUserDashboardMeta;

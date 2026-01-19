@@ -6,7 +6,7 @@ import { deleteCookie, getCookie } from './services/auth/tokenHandlers';
 import { getDefaultDashboardRoute, getRouteOwner, isAuthRoute, UserRole } from './lib/auth-utils';
 import { getUserInfo } from './services/auth/getUserInfo';
 import { getNewAccessToken } from './services/auth/auth.service';
-
+ 
 
 // This function can be marked `async` if using `await` inside
 export async function proxy(request: NextRequest) {
